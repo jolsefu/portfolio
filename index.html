@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
+		<script>
+			document.addEventListener('DOMContentLoaded', () => {
+				document.getElementById('dialog-default').showModal();
+			})
+		</script>
+	</head>
+	<body>
+		<dialog class="nes-dialog" id="dialog-default">
+			<form method="dialog" class="text-center">
+				<p class="title">Jules' Portfolio</p>
+				<p>Made with ThreeJS and NES.css.</p>
+				<button id="go-to-desk-button" class="nes-btn is-primary">Go To Desk</button>
+			</form>
+		</dialog>
+
+		<script type="module" src="/main.js"></script>
+	</body>
+</html>
