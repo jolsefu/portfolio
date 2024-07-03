@@ -19,16 +19,18 @@ document.body.appendChild( renderer.domElement );
 
 const controls = new OrbitControls( camera, renderer.domElement );
 // Starting camera position
-controls.object.position.set( -2.3526288774578337, 1.7044013644293665, 4.176237365643187 );
+controls.object.position.set( -3.164403208941583, 2.312294606497067, 5.492750812337571 );
 // Starting camera face
-controls.target = new THREE.Vector3( 0.8189440398780271, 0.7194347615533029, 2.033148879219393 );
+controls.target = new THREE.Vector3( 0.38907103355456535, 1.9556824230021994, 3.37513881081412 );
 controls.update();
 
+// Disable OrbitControls mouse
+controls.enabled = true;
 
-// const light = new THREE.DirectionalLight(0xffffff, 5);
-// light.position.set(0, 0, -5);
-// light.castShadow = true;
-// scene.add( light );
+// const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
+// directionalLight.position.set(0, 0, -5);
+// directionalLight.castShadow = true;
+// scene.add( directionalLight );
 
 // const pointlight = new THREE.PointLight( 0xf5eac6, 100 );
 // pointlight.position.set( 0.5844349384280548, 1.3483988826767448, -0.8302064764553763 );
@@ -53,15 +55,15 @@ document.body.appendChild( info.domElement );
 const button = document.createElement( 'div' );
 
 
-
-const p = utils.createElement('p', 'AAAAAAAAAAAAAAAA', {'color': 'blue'}, "className");
+// CSS2DObject Sample Element
+// const p = utils.createElement('p', 'AAAAAAAAAAAAAAAA', {'color': 'blue'}, "className");
 // p.textContent = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 // p.style.color = 'white';
-const pLabel = new CSS2DObject( p );
-const vec = new THREE.Vector3( 0, 0, -5 );
-vec.applyQuaternion( camera.quaternion );
-pLabel.position.copy( vec );
-scene.add( pLabel );
+// const pLabel = new CSS2DObject( p );
+// const vec = new THREE.Vector3( 0, 0, -5 );
+// vec.applyQuaternion( camera.quaternion );
+// pLabel.position.copy( vec );
+// scene.add( pLabel );
 
 // // Ground
 // const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
@@ -80,20 +82,6 @@ scene.add( pLabel );
 // spotlight.position.set(0, 25, 0);
 // scene.add(spotlight);
 
-document.querySelector( '#go-to-desk-button' ).addEventListener( 'click', () => {
-	gsap.to(controls.object.position, {
-		x: -0.565064986615273, y: 1.2051511341925925, z: 1.5898158224634866,
-		duration: 2,
-		ease: "power3.out",
-	});
-
-	gsap.to(controls.target, {
-		x: -0.3446645948412711, y: 1.0331916691065197, z: 1.0493875923082525,
-		duration: 2,
-		ease: "power3.out",
-	});
-} )
-
 const loader = new GLTFLoader();
 
 loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
@@ -101,7 +89,7 @@ loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
 	const model = gltf.scene;
 
 	// Reduce model aspect ratio
-	model.scale.set( 1 / 100, 1 / 100, 1 / 100 );
+	model.scale.set( 1 / 50, 1 / 50, 1 / 50 );
 	
 	model.position.set( 0, 0, 0 );
 
@@ -114,18 +102,16 @@ loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
 } );
 
 
-// Utility functions
+// Utility 3D Object functions
 
 /**
  * Hovered Object Animation
+ *
 */
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-// Excepted from the animation
-const objectInclusions = [
-	'monitor', 'telephone', 'floppy_disk', 'cd', 'pen'
-];
+const objectInclusions = ['monitor', 'telephone', 'floppy_disk', 'cd', 'top_paper'];
 let isAnimating = [];
 
 renderer.domElement.addEventListener( 'mousemove', onObjectHover, false );
@@ -147,22 +133,50 @@ function onObjectHover( event ) {
 	if ( intersects.length > 0 ) {
 		const object = intersects[0].object;
 
-		if ( objectIsIncluded( object.name ) && !isAnimating.includes( object.name ) ) {
-			// Move position
+		if ( objectIsIncluded( object.name ) && !isAnimating.includes( object.name ) && utils.isInDesk ) {
 			let tween;
 
 			if ( object.name === 'floppy_disk' ) {
 				tween = gsap.to( object.position, {
-					x: object.position.x, y: object.position.y, z: object.position.z - 10,
+					x: object.position.x, y: object.position.y, z: object.position.z - 5,
 					duration: 1.5,
 					ease: "power3.out"
 				} );
-			} else if ( object.name === 'pen' ) {
+			} else if ( object.name === 'top_paper' ) {
 				tween = gsap.to( object.position, {
-					x: object.position.x, y: object.position.y + 1000, z: object.position.z,
-					duration: 1.5,
+					x: object.position.x, y: object.position.y + 45, z: object.position.z,
+					duration: 1,
+					ease: "power3.out"
+				} )
+
+				const rootNode = object.parent.parent;
+				const pen = rootNode.getObjectByName( 'pen' );
+				const bottomPaper = rootNode.getObjectByName( 'bottom_paper' );
+
+				const penTween = gsap.to( pen.position, {
+					x: pen.position.x, y: pen.position.y + 2000, z: pen.position.z,
+					duration: 1,
 					ease: "power3.out"
 				} );
+
+				penTween.eventCallback( 'onComplete', () => {
+					penTween.reverse();
+				} );
+
+				penTween.play();
+
+				const bottomPaperTween = gsap.to( bottomPaper.position, {
+					x: bottomPaper.position.x, y: bottomPaper.position.y + 40, z: bottomPaper.position.z,
+					delay: .2,
+					duration: .5,
+					ease: "power3.out"
+				} );
+
+				bottomPaperTween.eventCallback( 'onComplete', () => {
+					bottomPaperTween.reverse();
+				} );
+
+				bottomPaperTween.play();
 			} else {
 				tween = gsap.to( object.position, {
 					x: object.position.x, y: object.position.y + 15, z: object.position.z,
@@ -173,38 +187,23 @@ function onObjectHover( event ) {
 
 			tween.eventCallback("onComplete", () => {
 				tween.reverse();
-			})
+			});
 
 			tween.eventCallback("onReverseComplete", () => {
 				isAnimating = isAnimating.filter( e => e !== object.name );
-			})
+			});
 
 			tween.play();
 			isAnimating.push( object.name );
-
-			// Enlarge
-			// gsap.to( object.scale, {
-			// 	x: 1.05, y: 1.05, z: 1.05,
-			// 	duration: 2,
-			// 	ease: "power3.out"
-			// } );
-
-			// gsap.to( object.position, {
-			// 	x: object.position.x, y: object.position.y - 5, z: object.position.z,
-			// 	delay: 2,
-			// 	duration: 2,
-			// 	ease: "power3.out"
-			// } );
-
-			// gsap.to( object.scale, {
-			// 	x: 1, y: 1, z: 1,
-			// 	delay: 2,
-			// 	duration: 2,
-			// 	ease: "power3.out"
-			// } );
 		}
 	}
 }
+
+// Camera Movements Functions
+
+document.querySelector( '#go-to-desk-button' ).addEventListener( 'click', () => {
+	utils.animateCameraToDesk( controls );
+} )
 
 /**
  * Clicked Object Functionality
@@ -227,20 +226,15 @@ function onObjectClick(event) {
 		const object = intersects[0].object;
 
 		console.log( object.name );
+
+		if ( object.name === 'monitor' ) {
+			utils.animateCameraToMonitor( controls );
+		}
+	
 	}
 }
 
 
-
-
-// HELPERS
-// const directionalLightHelper = new THREE.DirectionalLightHelper( light );
-// scene.add( directionalLightHelper );
-
-// const spotLightHelper = new THREE.SpotLightHelper( spotLight );
-// scene.add( spotLightHelper );
-
-// const size = 10;
 // const divisions = 10;
 
 // const gridHelper = new THREE.GridHelper( size, divisions );
@@ -251,10 +245,10 @@ function onObjectClick(event) {
 
 // Print current camera position
 controls.addEventListener("change", event => {
-	// console.log("Position");
-	// console.log( controls.object.position );
-	// console.log("Target");
-	// console.log( controls.target );
+	console.log("Position");
+	console.log( controls.object.position );
+	console.log("Target");
+	console.log( controls.target );
 	// console.log( controls.object.rotation );
 	
 	// let cameraWorld;
@@ -276,15 +270,11 @@ function animate() {
 }
 
 if ( WebGL.isWebGLAvailable() ) {
-
 	// Initiate function or other initializations here
 	animate();
-
 } else {
-
 	const warning = WebGL.getWebGLErrorMessage();
 	document.getElementById( 'container' ).appendChild( warning );
-
 }
 
 // Resizing
