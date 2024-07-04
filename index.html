@@ -3,20 +3,25 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>My first three.js app</title>
+		<title>Jules' Portfolio</title>
 		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
 		<script>
-			document.addEventListener('DOMContentLoaded', () => {
-				document.getElementById('dialog-default').showModal();
+			document.addEventListener( 'DOMContentLoaded', () => {
+				document.getElementById( 'dialog-default' ).showModal();
 			})
 		</script>
 	</head>
 	<body>
+		<div id="back-btn">
+			<button type="button" class="nes-btn is-warning">Back</button>	
+		</div>
+
 		<dialog class="nes-dialog" id="dialog-default">
 			<form method="dialog" class="text-center">
 				<p class="title">Jules' Portfolio</p>
-				<p>Made with ThreeJS and NES.css.</p>
+				<p>Made with ThreeJS, NES.css,</p>
+				<p>and GSAP.</p>
 				<button id="go-to-desk-button" class="nes-btn is-primary">Go To Desk</button>
 			</form>
 		</dialog>
