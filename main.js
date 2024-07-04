@@ -212,7 +212,19 @@ function onObjectHover( event ) {
 
 document.querySelector( '#go-to-desk-button' ).addEventListener( 'click', () => {
 	utils.animateCameraToDesk( controls );
-} )
+} );
+
+document.querySelector( '#back-btn' ).addEventListener( 'click', () => {
+	// Go back to start
+	if ( utils.isInDesk ) {
+		utils.animateCameraToStart( controls );
+
+		document.querySelector( '#dialog-default' ).showModal();
+	// Go back to desk
+	} else {
+		utils.animateCameraToDesk( controls );
+	}
+} );
 
 // Clicked 3D Object functionality
 
@@ -251,10 +263,10 @@ function onObjectClick(event) {
 
 // Print current camera position
 controls.addEventListener("change", event => {
-	console.log("Position");
-	console.log( controls.object.position );
-	console.log("Target");
-	console.log( controls.target );
+	// console.log("Position");
+	// console.log( controls.object.position );
+	// console.log("Target");
+	// console.log( controls.target );
 	// console.log( controls.object.rotation );
 	
 	// let cameraWorld;

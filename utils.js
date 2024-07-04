@@ -15,6 +15,22 @@ export function createElement( name, textContent, styles, classname ) {
   return element;
 }
 
+export function animateCameraToStart( controls ) {
+	gsap.to(controls.object.position, {
+		x: coordinates.start.position.x, y: coordinates.start.position.y, z: coordinates.start.position.z,
+		duration: 2,
+		ease: "power3.out",
+	});
+
+	gsap.to(controls.target, {
+		x: coordinates.start.target.x, y: coordinates.start.target.y, z: coordinates.start.target.z,
+		duration: 2,
+		ease: "power3.out",
+	});
+
+  isInDesk = false;
+}
+
 export function animateCameraToDesk( controls ) {
 	gsap.to(controls.object.position, {
 		x: coordinates.desk.position.x, y: coordinates.desk.position.y, z: coordinates.desk.position.z,
