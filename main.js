@@ -7,8 +7,12 @@ import WebGL from 'three/addons/capabilities/WebGL.js';
 import { gsap } from 'gsap';
 
 import * as utils from './utils.js';
+import coordinates from './coordinates.json';
 
-// Setup
+/**
+ * SETUP
+ * 
+*/
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -18,10 +22,19 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 const controls = new OrbitControls( camera, renderer.domElement );
+
 // Starting camera position
-controls.object.position.set( -3.164403208941583, 2.312294606497067, 5.492750812337571 );
-// Starting camera face
-controls.target = new THREE.Vector3( 0.38907103355456535, 1.9556824230021994, 3.37513881081412 );
+controls.object.position.set(
+	coordinates.start.position.x, 
+	coordinates.start.position.y, 
+	coordinates.start.position.z
+);
+// Starting camera target
+controls.target = new THREE.Vector3( 
+	coordinates.start.target.x,
+	coordinates.start.target.y, 
+	coordinates.start.target.z
+);
 controls.update();
 
 // Disable OrbitControls mouse
@@ -85,7 +98,6 @@ const button = document.createElement( 'div' );
 const loader = new GLTFLoader();
 
 loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
-
 	const model = gltf.scene;
 
 	// Reduce model aspect ratio
@@ -94,20 +106,17 @@ loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
 	model.position.set( 0, 0, 0 );
 
 	scene.add( model );
-
 }, undefined, function ( error ) {
-
 	console.error( error );
-
 } );
 
 
-// Utility 3D Object functions
-
 /**
- * Hovered Object Animation
- *
+ * UTILITY 3D OBJECTS FUNCTIONALITY
+ * 
 */
+
+// Hovered 3D Object animation 
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -199,16 +208,13 @@ function onObjectHover( event ) {
 	}
 }
 
-// Camera Movements Functions
+// Go To Desk camera animation
 
 document.querySelector( '#go-to-desk-button' ).addEventListener( 'click', () => {
 	utils.animateCameraToDesk( controls );
 } )
 
-/**
- * Clicked Object Functionality
- * 
-*/
+// Clicked 3D Object functionality
 
 renderer.domElement.addEventListener( 'click', onObjectClick, false );
 
@@ -256,9 +262,10 @@ controls.addEventListener("change", event => {
 	// console.log( cameraWorld );
 })
 
-
-
-
+/**
+ * MAIN ANIMATION RENDERING
+ * 
+*/
 
 function animate() {
   requestAnimationFrame( animate );
@@ -270,14 +277,13 @@ function animate() {
 }
 
 if ( WebGL.isWebGLAvailable() ) {
-	// Initiate function or other initializations here
 	animate();
 } else {
 	const warning = WebGL.getWebGLErrorMessage();
 	document.getElementById( 'container' ).appendChild( warning );
 }
 
-// Resizing
+// Window resizing
 window.addEventListener( 'resize', () => {
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
