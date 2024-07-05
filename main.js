@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { CSS2DObject, CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import WebGL from 'three/addons/capabilities/WebGL.js';
 
 import { gsap } from 'gsap';
@@ -17,11 +17,13 @@ import coordinates from './coordinates.json';
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+renderer.setClearColor( 0x000000, 0.5 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 const controls = new OrbitControls( camera, renderer.domElement );
+controls.enableDamping = true;
 
 // Starting camera position
 controls.object.position.set(
@@ -56,19 +58,21 @@ scene.add( spotLight );
 const light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
 
+// CSS 3D Renderer
+const cssScene = new THREE.Scene();
+cssScene.scale.set( 0.003, 0.003, 0.003 );
 
-const info = new CSS2DRenderer();
-info.setSize( window.innerWidth, window.innerHeight );
-info.domElement.style.position = 'absolute';
-info.domElement.style.top = '0px';
-info.domElement.style.pointerEvents = 'none';
+const cssRenderer = new CSS3DRenderer();
+cssRenderer.setSize( window.innerWidth, window.innerHeight );
+cssRenderer.domElement.style.position = 'absolute';
+cssRenderer.domElement.style.top = '0';
+cssRenderer.domElement.style.pointerEvents = 'none';
+document.body.appendChild( cssRenderer.domElement );
 
-document.body.appendChild( info.domElement );
+// CSS3DObject Sample Element
+const home = utils.createElement( 'home', 0, 500, 250 );
+cssScene.add( home );
 
-const button = document.createElement( 'div' );
-
-
-// CSS2DObject Sample Element
 // const p = utils.createElement('p', 'AAAAAAAAAAAAAAAA', {'color': 'blue'}, "className");
 // p.textContent = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
 // p.style.color = 'white';
@@ -243,7 +247,7 @@ function onObjectClick(event) {
 	if ( intersects.length > 0 ) {
 		const object = intersects[0].object;
 
-		console.log( object.name );
+		console.log( object.position );
 
 		if ( object.name === 'monitor' ) {
 			utils.animateCameraToMonitor( controls );
@@ -284,7 +288,7 @@ function animate() {
 
 	controls.update();
 	
-	info.render( scene, camera );
+	cssRenderer.render( cssScene, camera );
   renderer.render( scene, camera );
 }
 
