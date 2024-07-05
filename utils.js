@@ -1,18 +1,26 @@
 import { gsap } from 'gsap';
 import coordinates from './coordinates.json';
+import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 
 export let isInDesk = false;
 
-export function createElement( name, textContent, styles, classname ) {
-  const element = document.createElement( name );
-  element.textContent = textContent;
-  element.className = classname;
+export function createElement( id, x, y, z ) {	
+	// const div = document.createElement( 'div' );
+	// div.style.width = '480px';
+	// div.style.height = '360px';
+	// div.style.backgroundColor = '#000';
 
-  for (const [key, value] of Object.entries(styles)) {
-    element.style.setProperty(key, value);
-  }
+	const iframe = document.createElement( 'iframe' );
+	iframe.style.width = '600px';
+	iframe.style.height = '500px';
+	iframe.style.border = '0';
+	iframe.src = 'screens/home.html';
+	// div.appendChild( iframe );
 
-  return element;
+	const object = new CSS3DObject( iframe );
+	object.position.set( x, y, z );
+
+	return object;
 }
 
 export function animateCameraToStart( controls ) {
