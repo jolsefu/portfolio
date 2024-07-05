@@ -18,7 +18,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 const renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-renderer.setClearColor( 0x000000, 0.5 );
+renderer.setClearColor( 0x000000 );
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
@@ -39,7 +39,7 @@ controls.target = new THREE.Vector3(
 );
 controls.update();
 
-// Disable OrbitControls mouse
+// Disable or Enable OrbitControls mouse
 controls.enabled = true;
 
 // const directionalLight = new THREE.DirectionalLight(0xffffff, 5);
@@ -72,15 +72,6 @@ document.body.appendChild( cssRenderer.domElement );
 // CSS3DObject Sample Element
 const home = utils.createElement( 'home', 0, 500, 250 );
 cssScene.add( home );
-
-// const p = utils.createElement('p', 'AAAAAAAAAAAAAAAA', {'color': 'blue'}, "className");
-// p.textContent = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
-// p.style.color = 'white';
-// const pLabel = new CSS2DObject( p );
-// const vec = new THREE.Vector3( 0, 0, -5 );
-// vec.applyQuaternion( camera.quaternion );
-// pLabel.position.copy( vec );
-// scene.add( pLabel );
 
 // // Ground
 // const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);

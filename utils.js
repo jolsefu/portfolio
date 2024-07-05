@@ -5,17 +5,11 @@ import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 export let isInDesk = false;
 
 export function createElement( id, x, y, z ) {	
-	// const div = document.createElement( 'div' );
-	// div.style.width = '480px';
-	// div.style.height = '360px';
-	// div.style.backgroundColor = '#000';
-
 	const iframe = document.createElement( 'iframe' );
 	iframe.style.width = '600px';
 	iframe.style.height = '500px';
 	iframe.style.border = '0';
 	iframe.src = 'screens/home.html';
-	// div.appendChild( iframe );
 
 	const object = new CSS3DObject( iframe );
 	object.position.set( x, y, z );
