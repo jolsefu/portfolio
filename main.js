@@ -71,7 +71,7 @@ document.body.appendChild( cssRenderer.domElement );
 
 // CSS3DObject Sample Element
 const home = utils.createElement( 'home', 0, 500, 250 );
-cssScene.add( home );
+// cssScene.add( home );
 
 // // Ground
 // const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
@@ -115,7 +115,7 @@ loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-const objectInclusions = ['monitor', 'telephone', 'floppy_disk', 'cd', 'top_paper'];
+const objectInclusions = ['monitor_1', 'monitor_2', 'telephone', 'floppy_disk', 'cd', 'top_paper'];
 let isAnimating = [];
 
 renderer.domElement.addEventListener( 'mousemove', onObjectHover, false );
@@ -181,6 +181,28 @@ function onObjectHover( event ) {
 				} );
 
 				bottomPaperTween.play();
+			} else if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
+				const rootNode = object.parent.parent;
+				const monitor = rootNode.getObjectByName( 'monitor_1' );
+				const screen = rootNode.getObjectByName( 'monitor_2' );
+
+				tween = gsap.to( monitor.position, {
+					x: monitor.position.x, y: monitor.position.y + 15, z: monitor.position.z,
+					duration: 1.5,
+					ease: "power3.out"
+				} );
+
+				const screenTween = gsap.to( screen.position, {
+					x: screen.position.x, y: screen.position.y + 15, z: screen.position.z,
+					duration: 1.5,
+					ease: "power3.out"
+				} );
+
+				screenTween.eventCallback("onComplete", () => {
+					screenTween.reverse();
+				});
+
+				screenTween.play();
 			} else {
 				tween = gsap.to( object.position, {
 					x: object.position.x, y: object.position.y + 15, z: object.position.z,
@@ -240,7 +262,7 @@ function onObjectClick(event) {
 
 		console.log( object.position );
 
-		if ( object.name === 'monitor' ) {
+		if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
 			utils.animateCameraToMonitor( controls );
 		}
 	
