@@ -6,14 +6,14 @@ export let isInDesk = false;
 
 export function createElement( id, x, y, z ) {	
 	const iframe = document.createElement( 'iframe' );
-	iframe.style.width = '1024px';
-	iframe.style.height = '768px';
+	iframe.style.width = '1070px';
+	iframe.style.height = '780px';
 	iframe.style.border = '0';
 	iframe.src = 'screens/home.html';
 
 	const object = new CSS3DObject( iframe );
 	object.position.set( x, y, z );
-	object.rotation.x = -0.174533;
+	object.rotation.x = -0.1;
 
 	return object;
 }
