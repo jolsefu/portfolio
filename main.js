@@ -60,7 +60,7 @@ scene.add( light );
 
 // CSS 3D Renderer
 const cssScene = new THREE.Scene();
-cssScene.scale.set( 0.0006, 0.0006, 0.0006 );
+cssScene.scale.set( 0.0005, 0.0005, 0.00065 );
 
 const cssRenderer = new CSS3DRenderer();
 cssRenderer.setSize( window.innerWidth, window.innerHeight );
@@ -70,7 +70,7 @@ cssRenderer.domElement.style.pointerEvents = 'none';
 document.body.appendChild( cssRenderer.domElement );
 
 // CSS3DObject Sample Element
-const home = utils.createElement( 'home', -100, 3300, 1250 );
+const home = utils.createElement( 'home', -145, 3913, 1200 );
 cssScene.add( home );
 
 // // Ground
