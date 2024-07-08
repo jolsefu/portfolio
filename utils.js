@@ -6,15 +6,33 @@ export let isInDesk = false;
 
 export function createElement( id, x, y, z ) {	
 	const iframe = document.createElement( 'iframe' );
-	iframe.style.width = '600px';
-	iframe.style.height = '500px';
+	iframe.style.width = '1024px';
+	iframe.style.height = '768px';
 	iframe.style.border = '0';
 	iframe.src = 'screens/home.html';
 
 	const object = new CSS3DObject( iframe );
 	object.position.set( x, y, z );
+	object.rotation.x = -0.174533;
 
 	return object;
+}
+
+export function animateObject( object, x, y, z, del, dur ) {
+	const tween = gsap.to( object.position, {
+		x: object.position.x + x, y: object.position.y + y, z: object.position.z + z,
+		delay: del,
+		duration: dur,
+		ease: "power3.out"
+	} );
+
+	tween.eventCallback("onComplete", () => {
+		tween.reverse();
+	});
+
+	tween.play();
+
+	return tween;
 }
 
 export function animateCameraToStart( controls ) {

@@ -60,7 +60,7 @@ scene.add( light );
 
 // CSS 3D Renderer
 const cssScene = new THREE.Scene();
-cssScene.scale.set( 0.003, 0.003, 0.003 );
+cssScene.scale.set( 0.0006, 0.0006, 0.0006 );
 
 const cssRenderer = new CSS3DRenderer();
 cssRenderer.setSize( window.innerWidth, window.innerHeight );
@@ -70,8 +70,8 @@ cssRenderer.domElement.style.pointerEvents = 'none';
 document.body.appendChild( cssRenderer.domElement );
 
 // CSS3DObject Sample Element
-const home = utils.createElement( 'home', 0, 500, 250 );
-// cssScene.add( home );
+const home = utils.createElement( 'home', -100, 3300, 1250 );
+cssScene.add( home );
 
 // // Ground
 // const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
@@ -141,85 +141,30 @@ function onObjectHover( event ) {
 			let tween;
 
 			if ( object.name === 'floppy_disk' ) {
-				tween = gsap.to( object.position, {
-					x: object.position.x, y: object.position.y, z: object.position.z - 5,
-					duration: 1.5,
-					ease: "power3.out"
-				} );
+				tween = utils.animateObject( object, 0, 0, -5, 0, 1.5 );
 			} else if ( object.name === 'top_paper' ) {
-				tween = gsap.to( object.position, {
-					x: object.position.x, y: object.position.y + 45, z: object.position.z,
-					duration: 1,
-					ease: "power3.out"
-				} )
-
 				const rootNode = object.parent.parent;
 				const pen = rootNode.getObjectByName( 'pen' );
 				const bottomPaper = rootNode.getObjectByName( 'bottom_paper' );
 
-				const penTween = gsap.to( pen.position, {
-					x: pen.position.x, y: pen.position.y + 2000, z: pen.position.z,
-					duration: 1,
-					ease: "power3.out"
-				} );
-
-				penTween.eventCallback( 'onComplete', () => {
-					penTween.reverse();
-				} );
-
-				penTween.play();
-
-				const bottomPaperTween = gsap.to( bottomPaper.position, {
-					x: bottomPaper.position.x, y: bottomPaper.position.y + 40, z: bottomPaper.position.z,
-					delay: .2,
-					duration: .5,
-					ease: "power3.out"
-				} );
-
-				bottomPaperTween.eventCallback( 'onComplete', () => {
-					bottomPaperTween.reverse();
-				} );
-
-				bottomPaperTween.play();
+				tween = utils.animateObject( object, 0, 45, 0, 0, 1 );
+				utils.animateObject( pen, 0, 2000, 0, 0, 1 );
+				utils.animateObject( bottomPaper, 0, 40, 0, .2, .5 );
 			} else if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
 				const rootNode = object.parent.parent;
 				const monitor = rootNode.getObjectByName( 'monitor_1' );
 				const screen = rootNode.getObjectByName( 'monitor_2' );
 
-				tween = gsap.to( monitor.position, {
-					x: monitor.position.x, y: monitor.position.y + 15, z: monitor.position.z,
-					duration: 1.5,
-					ease: "power3.out"
-				} );
-
-				const screenTween = gsap.to( screen.position, {
-					x: screen.position.x, y: screen.position.y + 15, z: screen.position.z,
-					duration: 1.5,
-					ease: "power3.out"
-				} );
-
-				screenTween.eventCallback("onComplete", () => {
-					screenTween.reverse();
-				});
-
-				screenTween.play();
+				tween = utils.animateObject( monitor, 0, 15, 0, 0, 1.5 ); 
+				utils.animateObject( screen, 0, 15, 0, 0, 1.5 );
 			} else {
-				tween = gsap.to( object.position, {
-					x: object.position.x, y: object.position.y + 15, z: object.position.z,
-					duration: 1.5,
-					ease: "power3.out"
-				} );
+				tween = utils.animateObject( object, 0, 15, 0, 0, 1.5 );
 			}
-
-			tween.eventCallback("onComplete", () => {
-				tween.reverse();
-			});
 
 			tween.eventCallback("onReverseComplete", () => {
 				isAnimating = isAnimating.filter( e => e !== object.name );
 			});
 
-			tween.play();
 			isAnimating.push( object.name );
 		}
 	}
@@ -260,12 +205,15 @@ function onObjectClick(event) {
 	if ( intersects.length > 0 ) {
 		const object = intersects[0].object;
 
-		console.log( object.position );
+		let box3 = new THREE.Box3().setFromObject( object );
+		let size = new THREE.Vector3();
+		box3.getSize( size );
+
+		console.log( box3.getSize( size ) );
 
 		if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
 			utils.animateCameraToMonitor( controls );
 		}
-	
 	}
 }
 
