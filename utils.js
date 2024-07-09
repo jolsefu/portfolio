@@ -4,13 +4,21 @@ import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 
 export let isInDesk = false;
 
-export function createElement( id, x, y, z ) {	
+export function createElement( id, x, y, z, controls ) {	
 	const iframe = document.createElement( 'iframe' );
 	iframe.style.width = '1070px';
 	iframe.style.height = '780px';
 	iframe.style.border = '0';
 	iframe.src = 'screens/home.html';
 
+	iframe.addEventListener( 'load', () => {
+		const iframeDocument = iframe.contentWindow.document;
+
+		iframeDocument.addEventListener( 'click', () => {
+			if ( isInDesk ) animateCameraToMonitor( controls );
+		} );
+	} );
+	
 	const object = new CSS3DObject( iframe );
 	object.position.set( x, y, z );
 	object.rotation.x = -0.1;

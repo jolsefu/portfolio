@@ -70,7 +70,7 @@ cssRenderer.domElement.style.pointerEvents = 'none';
 document.body.appendChild( cssRenderer.domElement );
 
 // CSS3DObject Sample Element
-const home = utils.createElement( 'home', -145, 3913, 1200 );
+const home = utils.createElement( 'home', -145, 3913, 1200, controls );
 cssScene.add( home );
 
 // // Ground
@@ -204,12 +204,8 @@ function onObjectClick(event) {
 
 	if ( intersects.length > 0 ) {
 		const object = intersects[0].object;
-
-		let box3 = new THREE.Box3().setFromObject( object );
-		let size = new THREE.Vector3();
-		box3.getSize( size );
-
-		console.log( box3.getSize( size ) );
+		
+		console.log( object.name );
 
 		if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
 			utils.animateCameraToMonitor( controls );
