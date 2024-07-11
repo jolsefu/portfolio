@@ -18,15 +18,15 @@ function createWebGLRenderer() {
 	glRenderer.setClearColor( 0x000000 );
 	glRenderer.setSize( window.innerWidth, window.innerHeight );
 
-	document.body.appendChild( glRenderer.domElement );
+	glRenderer.domElement.style.position = 'absolute';
+	glRenderer.domElement.style.top = 0;
+
+	cssRenderer.domElement.appendChild( glRenderer.domElement );
 }
 
 function createCSS3DRenderer() {
 	cssRenderer = new CSS3DRenderer();
 	cssRenderer.setSize( window.innerWidth, window.innerHeight );
-	cssRenderer.domElement.style.position = 'absolute';
-	cssRenderer.domElement.style.top = '0';
-	cssRenderer.domElement.style.pointerEvents = 'none';
 
 	document.body.appendChild( cssRenderer.domElement );
 }
@@ -50,7 +50,9 @@ function addModel() {
 	loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
 		const model = gltf.scene;
 
-		// Reduce model aspect ratio
+		const screen = model.getObjectByName( 'monitor_2' );
+		screen.material.transparent = true;
+
 		model.scale.set( 1 / 50, 1 / 50, 1 / 50 );
 		
 		model.position.set( 0, 0, 0 );
@@ -61,9 +63,14 @@ function addModel() {
 	} );
 }
 
-function addCSS() {
-	const home = utils.createElement( 'home', -145, 3913, 1200 );
-	cssScene.add( home );
+function addCSS( url, width, height, position, rotation ) {
+	const plane = utils.createPlane( width, height, position, rotation );
+	glScene.add( plane );
+
+	const cssObject = utils.createCSSObject( url, width, height, position, rotation );
+	cssScene.add( cssObject );
+
+	console.log( plane.rotation, cssObject.rotation )
 }
 
 /////////////////////////////
@@ -102,7 +109,6 @@ function createCameraTimeline() {
 		// Go back to start
 		if ( utils.isInDesk ) {
 			utils.animateCameraToStart( controls );
-
 			document.querySelector( '#dialog-default' ).showModal();
 		// Go back to desk
 		} else {
@@ -239,6 +245,8 @@ function initialize() {
 	createCSS3DRenderer();
 	createWebGLRenderer();
 
+	// glRenderer.domElement.style.pointerEvents = 'none';
+
 	createOrbitControls();
 	createCameraTimeline();
 
@@ -251,7 +259,14 @@ function initialize() {
 	// Add features
 	addLight();
 	addModel();
-	addCSS();
+
+	addCSS( 
+		'screens/home.html',
+		1070,
+		780,	
+		new THREE.Vector3( -150, 3913, 1190 ),
+		new THREE.Vector3( -0.1, 0, 0 ),
+	);
 }
 
 initialize();
@@ -265,8 +280,8 @@ function animate() {
 
 	controls.update();
 	
-	cssRenderer.render( cssScene, camera );
   glRenderer.render( glScene, camera );
+	cssRenderer.render( cssScene, camera );
 }
 
 if ( WebGL.isWebGLAvailable() ) {
