@@ -52,6 +52,7 @@ function addModel() {
 
 		const screen = model.getObjectByName( 'monitor_2' );
 		screen.material.transparent = true;
+		screen.material.opacity = 0.6;
 
 		model.scale.set( 1 / 50, 1 / 50, 1 / 50 );
 		
@@ -69,8 +70,6 @@ function addCSS( url, width, height, position, rotation ) {
 
 	const cssObject = utils.createCSSObject( url, width, height, position, rotation );
 	cssScene.add( cssObject );
-
-	console.log( plane.rotation, cssObject.rotation )
 }
 
 /////////////////////////////
@@ -127,7 +126,7 @@ function setupObjectFunctionality() {
 	raycaster = new THREE.Raycaster();
 	mouse = new THREE.Vector2();
 
-	objectInclusions = ['monitor_1', 'monitor_2', 'telephone', 'floppy_disk', 'cd', 'top_paper'];
+	objectInclusions = [ 'telephone', 'floppy_disk', 'cd', 'top_paper'];
 
 	glRenderer.domElement.addEventListener( 'click', onObjectClick, false );
 	glRenderer.domElement.addEventListener( 'mousemove', onObjectHover, false );
@@ -190,11 +189,11 @@ function animateObject( object ) {
 		utils.animateObject( pen, 0, 2000, 0, 0, 1 );
 		utils.animateObject( bottomPaper, 0, 40, 0, .2, .5 );
 	} else if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
-		const monitor = rootNode.getObjectByName( 'monitor_1' );
-		const screen = rootNode.getObjectByName( 'monitor_2' );
+		// const monitor = rootNode.getObjectByName( 'monitor_1' );
+		// const screen = rootNode.getObjectByName( 'monitor_2' );
 
-		tween = utils.animateObject( monitor, 0, 15, 0, 0, 1.5 ); 
-		utils.animateObject( screen, 0, 15, 0, 0, 1.5 );
+		// tween = utils.animateObject( monitor, 0, 15, 0, 0, 1.5 ); 
+		// utils.animateObject( screen, 0, 15, 0, 0, 1.5 );
 	} else {
 		tween = utils.animateObject( object, 0, 15, 0, 0, 1.5 );
 	}
@@ -264,7 +263,7 @@ function initialize() {
 		'screens/home.html',
 		1070,
 		780,	
-		new THREE.Vector3( -150, 3913, 1190 ),
+		new THREE.Vector3( -150, 3913, 1180 ),
 		new THREE.Vector3( -0.1, 0, 0 ),
 	);
 }
@@ -282,6 +281,12 @@ function animate() {
 	
   glRenderer.render( glScene, camera );
 	cssRenderer.render( cssScene, camera );
+
+	if ( utils.isInMonitor ) {
+		glRenderer.domElement.style.pointerEvents = 'none';
+	} else {
+		glRenderer.domElement.style.pointerEvents = 'auto';
+	}
 }
 
 if ( WebGL.isWebGLAvailable() ) {

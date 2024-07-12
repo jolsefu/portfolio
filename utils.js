@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import coordinates from './coordinates.json';
 
 export let isInDesk = false;
+export let isInMonitor = false;
 
 export function createPlane( width, height, position, rotation ) {
   const material = new THREE.MeshBasicMaterial({
@@ -88,6 +89,7 @@ export function animateCameraToStart( controls ) {
 	});
 
   isInDesk = false;
+	isInMonitor = false;
 }
 
 export function animateCameraToDesk( controls ) {
@@ -103,7 +105,8 @@ export function animateCameraToDesk( controls ) {
 		ease: "power3.out",
 	});
 
-  isInDesk = true;
+	isInDesk = true;
+	isInMonitor = false;
 }
 
 export function animateCameraToMonitor( controls ) {
@@ -120,4 +123,5 @@ export function animateCameraToMonitor( controls ) {
 	});
 
   isInDesk = false;
+	isInMonitor = true;
 }
