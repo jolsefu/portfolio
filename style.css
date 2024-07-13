@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'kongtext';
-	src: url('fonts/kongtext.ttf') format('truetype');
+	src: url('static/fonts/kongtext.ttf') format('truetype');
 }
 
 * {

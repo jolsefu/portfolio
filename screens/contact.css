@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'minecraft';
+    src: url('../static/fonts/minecraft.ttf');
+}
+
+* {
+	font-family: 'minecraft';
+}
+
+html {
+}
+
+body {
+}
+
+#topbar {
+    background-color: #4c6da8;
+    height: 80px; 
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: white;
+    padding: 10px;
+    font-size: 2rem;
+    border-style: solid;
+    border-color: #4c6da8;
+}
+
+#body-topbar {
+    margin-top: 3px;
+    margin-bottom: -3px;
+    border-style: solid;
+    border-color: #4c6da8;
+    display: flex;
+    background-color: #4c6da8;
+    color: white;
+    font-size: 1.3rem;
+    padding: 2px;
+}
+
+#body {
+    border-style: solid;
+    border-color: #4c6da8;
+    display: flex;
+}
+
+#sidebar {
+    border-style: dashed;
+    border-color: #4c6da8;
+    background-color: yellow;
+    flex-basis: 15rem;
+}
+
+#content {
+    background-color: red;
+    flex-grow: 1;
+}

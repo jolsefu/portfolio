@@ -263,7 +263,7 @@ function initialize() {
 		'screens/home.html',
 		1070,
 		780,	
-		new THREE.Vector3( -150, 3913, 1180 ),
+		new THREE.Vector3( -150, 3910, 1180 ),
 		new THREE.Vector3( -0.1, 0, 0 ),
 	);
 }
