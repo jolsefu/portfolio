@@ -51,6 +51,7 @@ function addModel() {
 		const model = gltf.scene;
 
 		const screen = model.getObjectByName( 'monitor_2' );
+		screen.position.x -= 1;
 		screen.material.transparent = true;
 		screen.material.opacity = 0.6;
 
@@ -263,7 +264,7 @@ function initialize() {
 		'screens/home.html',
 		1070,
 		780,	
-		new THREE.Vector3( -150, 3910, 1180 ),
+		new THREE.Vector3( -155, 3910, 1180 ),
 		new THREE.Vector3( -0.1, 0, 0 ),
 	);
 }
