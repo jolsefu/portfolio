@@ -25,6 +25,21 @@ export function createPlane( width, height, position, rotation ) {
   return mesh;
 }
 
+export function createBlackPlane( width, height, position, rotation ) {
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x000000,
+    opacity: 1,
+  });
+  const geometry = new THREE.PlaneGeometry( width, height );
+  const mesh = new THREE.Mesh( geometry, material );
+
+	mesh.scale.set( 0.0005, 0.0005, 0.00065 );
+	mesh.position.set( position.x * 0.0005, position.y * 0.0005, position.z * 0.00065 );
+	mesh.rotation.set( -0.135, rotation.y, rotation.z );
+
+  return mesh;
+}
+
 export function createCSSObject( url, width, height, position, rotation ) {
 	const html = [
     '<div style="width:' + width + 'px; height:' + height + 'px;">',
