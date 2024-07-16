@@ -7,7 +7,7 @@ import WebGL from 'three/addons/capabilities/WebGL.js';
 import * as utils from './utils.js';
 import coordinates from './coordinates.json';
 
-let glRenderer, glScene, cssRenderer, cssScene, controls, camera;
+let glRenderer, glScene, cssRenderer, cssScene, controls, camera, composer;
 
 /////////////////////////////
 // Renderer Features       //
@@ -15,6 +15,7 @@ let glRenderer, glScene, cssRenderer, cssScene, controls, camera;
 
 function createWebGLRenderer() {
 	glRenderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+	glRenderer.shadowMap.enabled = true;
 	glRenderer.setClearColor( 0x000000 );
 	glRenderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -36,12 +37,14 @@ function createCSS3DRenderer() {
 /////////////////////////////
 
 function addLight() {
-	const spotLight = new THREE.SpotLight( 0xf5eac6, 50 );
-	spotLight.position.set( 2, 2, 2 );
-	glScene.add( spotLight );
+	const directionalLight = new THREE.DirectionalLight( 0xffffff, 2 );
 
-	const light = new THREE.AmbientLight( 0x404040 );
-	glScene.add( light );
+	directionalLight.position.set( 3, 3, 3 );
+	// directionalLight.shadow.normalBias = 0.1;
+	directionalLight.shadow.bias = -0.00019;
+	directionalLight.castShadow = true;
+
+	glScene.add( directionalLight )
 }
 
 function addModel() {
@@ -53,7 +56,14 @@ function addModel() {
 		const screen = model.getObjectByName( 'monitor_2' );
 		screen.position.x -= 1;
 		screen.material.transparent = true;
-		screen.material.opacity = 0.6;
+		screen.material.opacity = 0.4;
+
+		model.traverse( ( child ) => {
+			if ( child.isMesh ) {
+				child.castShadow = true;
+				child.receiveShadow = true;
+			}
+		} );
 
 		model.scale.set( 1 / 50, 1 / 50, 1 / 50 );
 		
@@ -261,7 +271,7 @@ function initialize() {
 	addModel();
 
 	addCSS( 
-		'screens/home.html',
+		'screens/desktop.html',
 		1070,
 		780,	
 		new THREE.Vector3( -156, 3905, 1181 ),
