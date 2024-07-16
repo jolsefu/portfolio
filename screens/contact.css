@@ -7,6 +7,26 @@
 	font-family: 'minecraft';
 }
 
+table {
+    border-collapse: collapse;
+    border-spacing: 20px;
+    width: 100%;
+}
+
+td, th {
+    text-align: left;
+    padding-top: 8px;
+}
+
+a {
+    color: #4c6da8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 #topbar {
     background-color: #4c6da8;
     height: 80px; 
@@ -82,14 +102,4 @@
 
 .box-content div {
     margin-top: 5px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-  
-td, th {
-    text-align: left;
-    padding-top: 8px;
 }
