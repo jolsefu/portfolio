@@ -264,9 +264,16 @@ function initialize() {
 		'screens/home.html',
 		1070,
 		780,	
+		new THREE.Vector3( -156, 3905, 1181 ),
+		new THREE.Vector3( -0.1, 0, 0 ),
+	);
+	const blackPlane = utils.createBlackPlane( 
+		1400, 
+		1000, 
 		new THREE.Vector3( -155, 3910, 1180 ),
 		new THREE.Vector3( -0.1, 0, 0 ),
 	);
+	glScene.add( blackPlane );
 }
 
 initialize();
