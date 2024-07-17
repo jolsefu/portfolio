@@ -3,7 +3,7 @@
     src: url('../static/fonts/minecraft.ttf');
 }
 
-* {
+html {
 	font-family: 'minecraft';
 }
 
