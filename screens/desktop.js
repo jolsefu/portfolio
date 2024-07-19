@@ -12,7 +12,7 @@ function showWindowOnDoubleClick( icon ) {
     const window = document.querySelector( '.window' );
     const body = document.querySelector( 'body' );
 
-    window.querySelector( '.window-header' ).innerHTML = icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+    window.querySelector( '.window-header > .title' ).innerHTML = icon.parentNode.querySelector( '.icon-text' ).innerHTML;
     window.setAttribute( 'style', 'display: block;' );
 
     body.appendChild( window );
