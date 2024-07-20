@@ -7,7 +7,7 @@ import WebGL from 'three/addons/capabilities/WebGL.js';
 import * as utils from './utils.js';
 import coordinates from './coordinates.json';
 
-let glRenderer, glScene, cssRenderer, cssScene, controls, camera, composer;
+let glRenderer, glScene, cssRenderer, cssScene, controls, camera;
 
 /////////////////////////////
 // Renderer Features       //
