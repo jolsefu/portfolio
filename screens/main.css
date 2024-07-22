@@ -9,41 +9,54 @@ html {
 
 body {
     margin: 0;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 a {
-    color: black;
-    font: bold;
     text-decoration: none;
+    color: black;
+}
+
+#main {
+    display: flex;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    flex-basis: 20%;
+    padding: 2rem 1rem 2rem 1rem;
+    gap: 1rem;
 }
 
 #content {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 90vh;
-    width: 100%;
+    height: 100vh;
+    flex-grow: 1;
+    border-left: black solid 1px;
+    padding: 2rem;
+}
+
+#content .title {
+    font-size: 2rem;
+}
+
+#content .context {
+    font-size: 1.5rem;
 }
 
 #name {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
     margin-bottom: 0;
 }
 
-#subtext {
-    margin-top: -.5rem;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-}
-
 #buttons {
     display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    font-size: 1.3rem;
+    flex-direction: column;
+    gap: .5rem;
 }
 
 .button {
@@ -51,6 +64,9 @@ a {
     padding: 3px;
     border-bottom: black solid 1px;
     border-right: black solid 1px;
+    width: fit-content;
+    cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .button:active {
