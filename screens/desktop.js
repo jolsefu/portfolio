@@ -1,3 +1,5 @@
+import * as sound from './sound.js';
+
 let elements = [];
 
 function showDate() {
@@ -198,7 +200,10 @@ function initialize() {
   document.querySelectorAll( '.window' ).forEach( window => draggableWindow( window ) );
   document.querySelectorAll( '.icon-image' ).forEach( icon => showWindowOnDoubleClick( icon ) );
 
-  makeResizableWindow( '.window' )
+  makeResizableWindow( '.window' );
+
+  document.addEventListener( 'mousedown', sound.playSingleClick );
+  document.addEventListener( 'mouseup', sound.playSingleClick );
 }
 
 document.addEventListener( 'DOMContentLoaded', initialize );
