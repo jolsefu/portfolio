@@ -22,10 +22,17 @@ a {
 }
 
 #sidebar {
+    top: 2rem;
+    position: sticky;
+}
+
+#sidebar {
+    overflow: auto;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 50vh;
     flex-basis: 20%;
+    flex-shrink: 0;
     padding: 2rem 1rem 2rem 1rem;
     gap: 1rem;
 }
@@ -34,12 +41,12 @@ a {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    flex-grow: 1;
     border-left: black solid 1px;
     padding: 2rem;
 }
 
 #content .title {
+    font-weight: bold;
     font-size: 2rem;
 }
 
@@ -50,13 +57,27 @@ a {
 #name {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 0;
 }
 
 #buttons {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+}
+
+#about-img {
+    float: right;
+    margin: 5px;
+    border: 1px black solid;
+}
+
+.anchor {
+    text-decoration: underline;
+    color: blue;
+}
+
+.text {
+    margin-top: 1rem;
+    font-size: 1.3rem;
 }
 
 .button {
@@ -67,16 +88,11 @@ a {
     width: fit-content;
     cursor: pointer;
     font-size: 1.2rem;
+    text-align: center;
+    width: 90%;
 }
 
 .button:active {
-    border-top: black solid 1px;
-    border-left: black solid 1px;
-    border-bottom: 0;
-    border-right: 0;
-}
-
-.button.active {
     border-top: black solid 1px;
     border-left: black solid 1px;
     border-bottom: 0;
