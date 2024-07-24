@@ -12,7 +12,7 @@ body {
     margin-top: 30px;
 }
 
-a {
+#buttons a {
     text-decoration: none;
     color: black;
 }
@@ -41,11 +41,11 @@ a {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    border-left: black solid 1px;
     padding: 2rem;
 }
 
 #content .title {
+    margin-bottom: 1rem;
     font-weight: bold;
     font-size: 2rem;
 }
@@ -66,18 +66,14 @@ a {
 
 #about-img {
     float: right;
-    margin: 5px;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
     border: 1px black solid;
 }
 
-.anchor {
-    text-decoration: underline;
-    color: blue;
-}
-
 .text {
-    margin-top: 1rem;
     font-size: 1.3rem;
+    margin-bottom: 1rem;
 }
 
 .button {
