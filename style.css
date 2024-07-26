@@ -6,11 +6,14 @@
 * {
 	font-family: 'kongtext';
 	font-weight: 500;
-	letter-spacing: -4px;
 }
 
 body {
     margin: 0;
+}
+
+button {
+	letter-spacing: -4px;
 }
 
 #back-btn {
@@ -24,6 +27,7 @@ body {
 #dialog-default {
 	transition: all 2s;
 	animation: fadeIn 2s;
+	letter-spacing: -4px;
 }
 
 @keyframes fadeIn {
