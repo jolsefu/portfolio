@@ -22,15 +22,11 @@ body {
 }
 
 #sidebar {
-    top: 2rem;
     position: sticky;
-}
-
-#sidebar {
-    overflow: auto;
+    top: 2rem;
     display: flex;
     flex-direction: column;
-    height: 50vh;
+    height: 20vh;
     flex-basis: 20%;
     flex-shrink: 0;
     padding: 2rem 1rem 2rem 1rem;
@@ -71,6 +67,45 @@ body {
     border: 1px black solid;
 }
 
+#icons {
+    display: flex;
+    gap: .5rem;
+}
+
+#projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1rem;
+}
+
+#projects-list a {
+    text-decoration: none;
+    color: black;
+}
+
+.icon {
+    font-size: 1.4rem;
+    background-color: #bfbfbf;
+    padding: 5px;
+    border-bottom: black solid 1px;
+    border-right: black solid 1px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.icon img {
+    width: 55px;
+    height: 55px;
+}
+
+.icon:active {
+    border-top: black solid 1px;
+    border-left: black solid 1px;
+    border-bottom: none;
+    border-right: none;
+}
+
 .text {
     font-size: 1.3rem;
     margin-bottom: 1rem;
@@ -81,7 +116,6 @@ body {
     padding: 3px;
     border-bottom: black solid 1px;
     border-right: black solid 1px;
-    width: fit-content;
     cursor: pointer;
     font-size: 1.2rem;
     text-align: center;
@@ -93,4 +127,34 @@ body {
     border-left: black solid 1px;
     border-bottom: 0;
     border-right: 0;
+}
+
+.year {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .5rem;
+}
+
+.project .button {
+    padding: 5px;
+    width: fit-content;
+}
+
+.project a {
+    width: fit-content;
+}
+
+.sub-title {
+    margin-top: 1rem;
+    font-size: 1.4rem;
+}
+
+.skill-list {
+    font-weight: bold;
+    font-size: 1.3rem;
 }
