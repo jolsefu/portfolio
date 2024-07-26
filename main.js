@@ -49,7 +49,7 @@ function addLight() {
 function addModel() {
 	const loader = new GLTFLoader();
 
-	loader.load( 'low_poly_computer_desk/scene.glb', function ( gltf ) {
+	loader.load( 'static/low_poly_computer_desk/scene.glb', function ( gltf ) {
 		const model = gltf.scene;
 
 		const screen = model.getObjectByName( 'monitor_2' );
@@ -270,7 +270,7 @@ function initialize() {
 	addModel();
 
 	addCSS( 
-		'screens/desktop.html',
+		'static/screens/desktop.html',
 		1070,
 		780,	
 		new THREE.Vector3( -156, 3905, 1181 ),
