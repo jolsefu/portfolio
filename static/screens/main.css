@@ -148,9 +148,13 @@ body {
     width: fit-content;
 }
 
+.bold {
+    font-weight: bold;
+}
+
 .sub-title {
-    margin-top: 1rem;
-    font-size: 1.4rem;
+    margin-top: .5rem;
+    font-size: 1.3rem;
 }
 
 .skill-list {
