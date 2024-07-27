@@ -16,22 +16,36 @@
             <div class="icon-text">My Web</div>
         </div>
 
-        <div class='window' style="display: none;">
-            <div class='resizers'>
+        <div class="window" style="display: none;">
+            <div class="resizers">
                 <div class="window-header">
                     <div class="title"></div>
-                    <div 
-                        class="exit" 
-                        onclick="document.querySelector( '.window' ).style.display = 'none';"
-                    >
-                        X
+                    <div id="window-symbols">
+                        <div 
+                            id="minimize"
+                            class="symbol symbol-default" 
+                        >
+                            —
+                        </div>
+                        <div 
+                            id="maximize"
+                            class="symbol symbol-default"
+                        >
+                            □
+                        </div>
+                        <div 
+                            class="symbol exit" 
+                            onclick="document.querySelector( '.window' ).style.display = 'none';"
+                        >
+                            X
+                        </div>
                     </div>
                 </div>
                 <iframe src="home.html" width="100%" height="100%" frameborder="0"></iframe>
-                <div class='resizer top-left'></div>
-                <div class='resizer top-right'></div>
-                <div class='resizer bottom-left'></div>
-                <div class='resizer bottom-right'></div>
+                <div class="resizer top-left"></div>
+                <div class="resizer top-right"></div>
+                <div class="resizer bottom-left"></div>
+                <div class="resizer bottom-right"></div>
             </div>
         </div>
 

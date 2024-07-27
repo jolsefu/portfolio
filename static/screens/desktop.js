@@ -9,6 +9,16 @@ function showDate() {
   document.querySelector( '#time-display' ).innerHTML = formattedDate;
 }
 
+function minimizeWindow() {
+  const window = document.querySelector( '.window' );
+  window.setAttribute( 'style', 'width: 900px; height: 600px; top: 100px; left: 100px;' );
+}
+
+function maximizeWindow() {
+  const window = document.querySelector( '.window' );
+  window.setAttribute( 'style', 'width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
+}
+
 function showWindowOnDoubleClick( icon ) {
   icon.addEventListener( 'dblclick', () => {
     const window = document.querySelector( '.window' );
@@ -204,6 +214,12 @@ function initialize() {
 
   document.addEventListener( 'mousedown', sound.playSingleClick );
   document.addEventListener( 'mouseup', sound.playSingleClick );
+
+  const maximizeButton = document.querySelector( '#maximize' );
+  maximizeButton.addEventListener( 'click', maximizeWindow );
+
+  const minimizeButton = document.querySelector( '#minimize' );
+  minimizeButton.addEventListener( 'click', minimizeWindow );
 }
 
 document.addEventListener( 'DOMContentLoaded', initialize );
