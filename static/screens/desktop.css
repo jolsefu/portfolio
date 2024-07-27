@@ -5,6 +5,7 @@
 
 html {
     font-family: 'schoolbook';
+    overflow: hidden;
 }
 
 body {
@@ -31,6 +32,10 @@ body {
     border-left: white solid;
     width: 100%;
     height: 50px;
+}
+
+#window-symbols {
+    display: flex;
 }
 
 .window {
@@ -70,14 +75,22 @@ body {
     margin-top: 3px;
 }
 
-.window-header > .exit {
+.exit {
     background-color: red;
+    color: white;
+}
+
+.symbol-default {
+    background-color: white;
+    color: black;
+}
+
+.symbol {
     height: 70%;
     padding: 0 3px 0 3px;
     border: 1px black solid;
     margin-right: 5px;
     margin-top: 3px;
-    color: white;
     font-weight: bold;
     cursor: pointer;
 }
