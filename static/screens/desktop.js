@@ -20,12 +20,15 @@ function maximizeWindow() {
   window.setAttribute( 'style', 'width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
 }
 
-function showWindowOnDoubleClick( icon, source ) {
+function showWindowOnDoubleClick( icon ) {
   icon.addEventListener( 'dblclick', () => {
     const window = document.querySelector( '.window' );
     const body = document.querySelector( 'body' );
 
-    window.querySelector( '.window-header > .title' ).innerHTML = icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+    window.querySelector( '.window-header > .title' ).innerHTML = 
+      icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+    const source = icon.getAttribute( 'data-source' );
+    iframe.src = source;
     window.setAttribute( 'style', 'display: block;' );
 
     body.appendChild( window );
