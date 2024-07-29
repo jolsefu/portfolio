@@ -25,8 +25,7 @@ function showWindowOnDoubleClick( icon ) {
     const window = document.querySelector( '.window' );
     const body = document.querySelector( 'body' );
 
-    window.querySelector( '.window-header > .title' ).innerHTML = 
-      icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+    window.querySelector( '.window-header > .title' ).innerHTML = icon.parentNode.querySelector( '.icon-text' ).innerHTML;
     const source = icon.getAttribute( 'data-source' );
     iframe.src = source;
     window.setAttribute( 'style', 'display: block;' );
