@@ -1,6 +1,7 @@
 import * as sound from './sound.js';
 
 let elements = [];
+let iframe;
 
 function showDate() {
   const clientDate = new Date();
@@ -19,7 +20,7 @@ function maximizeWindow() {
   window.setAttribute( 'style', 'width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
 }
 
-function showWindowOnDoubleClick( icon ) {
+function showWindowOnDoubleClick( icon, source ) {
   icon.addEventListener( 'dblclick', () => {
     const window = document.querySelector( '.window' );
     const body = document.querySelector( 'body' );
@@ -50,6 +51,8 @@ function makeResizableWindow( windowDiv ) {
 
     currentResizer.addEventListener( 'mousedown', ( e ) => {
       e.preventDefault();
+      iframe.setAttribute( 'style', 'pointer-events: none;' );
+
       original_width = 
         parseFloat( getComputedStyle( element, null ).getPropertyValue( 'width' ).replace( 'px', '' ) );
       original_height = 
@@ -58,6 +61,7 @@ function makeResizableWindow( windowDiv ) {
       original_y = element.getBoundingClientRect().top;
       original_mouse_x = e.pageX;
       original_mouse_y = e.pageY;
+
       window.addEventListener( 'mousemove', resize );
       window.addEventListener( 'mouseup', stopResize );
     } );
@@ -114,6 +118,8 @@ function makeResizableWindow( windowDiv ) {
     }
     
     function stopResize() {
+      iframe.setAttribute( 'style', 'pointer-events: auto;' );
+
       window.removeEventListener('mousemove', resize)
     }
   }
@@ -132,11 +138,13 @@ function draggableWindow( windowDiv ) {
     pos3 = e.clientX;
     pos4 = e.clientY;
 
+    iframe.setAttribute( 'style', 'pointer-events: none;' );
+
     document.onmouseup = closeDragElement;
     document.onmousemove = elementDrag;
   }
 
-  function elementDrag(e) {
+  function elementDrag( e ) {
     e.preventDefault();
 
     pos1 = pos3 - e.clientX;
@@ -150,6 +158,8 @@ function draggableWindow( windowDiv ) {
   }
 
   function closeDragElement() {
+    iframe.setAttribute( 'style', 'pointer-events: auto;' );
+
     document.onmouseup = null;
     document.onmousemove = null;
   }
@@ -203,6 +213,8 @@ function formatClientDateTime(clientDateTime) {
 }
 
 function initialize() {
+  iframe = document.querySelector( 'iframe' );
+
   setInterval( showDate, 1000 );
   
   enableIconHighlightOnClick();
