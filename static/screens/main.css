@@ -1,7 +1,4 @@
-@font-face {
-    font-family: 'schoolbook';
-    src: url('../static/fonts/schoolbook.ttf');
-}
+@import 'font.css';
 
 html { 
     font-family: 'schoolbook', 'Times New Roman', Times, serif;
