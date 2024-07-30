@@ -36,13 +36,12 @@ body {
 }
 
 .window {
+    display: none;
     position: absolute;
     z-index: 9;
     background-color: #f1f1f1;
     border: 1px solid black;
     text-align: center;
-    width: 900px;
-    height: 600px;
     top: 100px;
     left: 100px;
 }

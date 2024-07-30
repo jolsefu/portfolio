@@ -12,12 +12,12 @@ function showDate() {
 
 function minimizeWindow() {
   const window = document.querySelector( '.window' );
-  window.setAttribute( 'style', 'width: 900px; height: 600px; top: 100px; left: 100px;' );
+  window.setAttribute( 'style', 'display: block; width: 900px; height: 600px; top: 100px; left: 100px;' );
 }
 
 function maximizeWindow() {
   const window = document.querySelector( '.window' );
-  window.setAttribute( 'style', 'width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
+  window.setAttribute( 'style', 'display: block; width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
 }
 
 function showWindowOnDoubleClick( icon ) {
@@ -26,16 +26,19 @@ function showWindowOnDoubleClick( icon ) {
     const body = document.querySelector( 'body' );
 
     window.querySelector( '.window-header > .title' ).innerHTML = icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+
     const source = icon.getAttribute( 'data-source' );
     iframe.src = source;
-    window.setAttribute( 'style', 'display: block;' );
+
+    const width = icon.getAttribute( 'data-width' );
+    const height = icon.getAttribute( 'data-height' );
+
+    window.setAttribute( 'style', `display: block; width: ${width}; height: ${height};` );
 
     body.appendChild( window );
   } );
 }
 
-// https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d 
-// By Hung Nguyen
 function makeResizableWindow( windowDiv ) {
   const element = document.querySelector( windowDiv );
   const resizers = document.querySelectorAll( windowDiv + ' .resizer' );
@@ -127,8 +130,6 @@ function makeResizableWindow( windowDiv ) {
   }
 }
 
-// https://www.w3schools.com/howto/howto_js_draggable.asp
-// By W3Schools
 function draggableWindow( windowDiv ) {
   let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
