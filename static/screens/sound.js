@@ -4,7 +4,5 @@ export function playSingleClick() {
   click.play();
 }
 
-console.log( 'home' );
-
 document.addEventListener( 'mousedown', playSingleClick );
 document.addEventListener( 'mouseup', playSingleClick );
