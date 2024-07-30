@@ -5,13 +5,65 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
+            @import "font.css";
+
+            html {
+                font-family: 'schoolbook';
+                overflow: hidden;
+            }
+
             body {
-                margin-top: 30px;
+                margin-top: 40px;
+            }
+
+            div {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            div > p {
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+
+            .title {
+                font-size: 1.2rem;
+                font-weight: bold;
             }
         </style>
     </head>
-    <body>
-        Special thanks to:
+    <body contenteditable="true">
+        <div class="title">
+            Special thanks to
+        </div>
+
+        <div>
+            <a target="_blank" href="https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d ">
+                // https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d 
+            </a>
+            <p>
+                By Hung Nguyen 
+            </p>
+        </div>
+
+        <div>
+            <a target="_blank" href="https://www.w3schools.com/howto/howto_js_draggable.asp">
+                // https://www.w3schools.com/howto/howto_js_draggable.asp
+            </a>
+            <p>
+                By W3School
+            </p>
+        </div>
+
+        <div class="title">Inspo</div>
+
+        <div>
+            <p>
+                <a target="_blank" href="https://joeyderuiter.me/">
+                    https://joeyderuiter.me/
+                </a>
+            </p>
+        </div>
 
         <script type="module" src="sound.js"></script>
    </body>
