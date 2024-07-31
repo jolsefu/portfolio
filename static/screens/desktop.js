@@ -189,8 +189,10 @@ function enableIconHighlightOnClick() {
 
     iconDiv.addEventListener( 
       'click', 
-      () => iconDiv.querySelector( '.icon-image' )
-      .setAttribute( 'style', 'background-color: rgba(0, 0, 255, 0.5);' ) 
+      () => { 
+        removeAllIconHighlight();
+        iconDiv.querySelector( '.icon-image' ).setAttribute( 'style', 'background-color: rgba(0, 0, 255, 0.5);' )
+      }
     );
   } );
 
