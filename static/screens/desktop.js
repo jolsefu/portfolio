@@ -10,6 +10,11 @@ function showDate() {
   document.querySelector( '#time-display' ).innerHTML = formattedDate;
 }
 
+function exitWindow() {
+  const window = document.querySelector( '.window' );
+  window.style.display = 'none';
+}
+
 function minimizeWindow() {
   const window = document.querySelector( '.window' );
   window.setAttribute( 'style', 'display: block; width: 900px; height: 600px; top: 100px; left: 100px;' );
@@ -237,6 +242,9 @@ function initialize() {
 
   const minimizeButton = document.querySelector( '#minimize' );
   minimizeButton.addEventListener( 'click', minimizeWindow );
+
+  const exitButton = document.querySelector( '#exit' );
+  exitButton.addEventListener( 'click', exitWindow );
 }
 
 document.addEventListener( 'DOMContentLoaded', initialize );
