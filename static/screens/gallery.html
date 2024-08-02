@@ -9,15 +9,53 @@
 
             html {
                 font-family: 'schoolbook';
-                overflow: hidden;
+                overflow: auto;
             }
 
             body {
                 margin-top: 40px;
             }
+
+            #intro {
+                font-size: 1.1rem;
+            }
+
+            #images {
+                margin-top: 2rem;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
         </style>
     </head>
     <body>
+        <div id="intro">
+            Hello! I also have a hobby of taking pictures and doing videography. Feel free to have a look at them.
+            More of my work can be found in here: <a target="_blank" href="https://drive.google.com/drive/folders/19_K16sQa5EoTX3xMoWQWgj_Vr9MPqomQ?usp=sharing">Videos</a>.
+        </div>
+
+        <div id="images">
+            <div class="image">
+                <div>Trip to El Uelo's Place, Bukidnon (2024)</div>
+                <iframe src="https://drive.google.com/file/d/1jDD3tvRJjR3bb9uDKYHYBJmBHNFwNNU-/preview" width="340" height="300"></iframe>
+            </div>
+
+            <div class="image">
+                <div>Trip to Malaybalay, Bukidnon (2024)</div>
+                <iframe src="https://drive.google.com/file/d/1QNDPLopNAXjMnKOVk96zR_WHvT1AjKk8/preview" width="340" height="300"></iframe>
+            </div>
+
+            <div class="image">
+                <div>Ghost of Tsushima Director's Cut (2024)</div>
+                <iframe src="https://drive.google.com/file/d/1di47X1M0e_n9t40Y8FZp5k7V_fqCinuq/preview" width="340" height="300"></iframe>
+            </div>
+
+            <div class="image">
+                <div>Red Dead Redemption 2 (2023)</div>
+                <iframe src="https://drive.google.com/file/d/11GxuweshpAWxNPrdJoOqNqk4l68hKQB9/preview" width="340" height="300"></iframe>
+            </div>
+        </div>
 
         <script type="module" src="sound.js"></script>
    </body>
