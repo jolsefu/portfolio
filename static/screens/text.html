@@ -30,50 +30,61 @@
                 font-size: 1.2rem;
                 font-weight: bold;
             }
+
+            #edit-btn {
+                background-color: #bfbfbf;
+                width: fit-content;
+                padding: 5px;
+                border: black solid 1px;
+                cursor: pointer;
+            }
+
+            #edit-btn:active, #edit-btn.active {
+                background-color: #9e9e9e;
+            }
         </style>
     </head>
     <body>
-        <div class="title">
-            Special thanks to
+        <div id="edit-btn">
+            Edit
         </div>
 
-        <div>
-            <a target="_blank" href="https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d ">
-                // https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d 
-            </a>
-            <p>
-                By Hung Nguyen 
-            </p>
-        </div>
+        <div id="content">
+            <div class="title">
+                Special thanks to
+            </div>
 
-        <div>
-            <a target="_blank" href="https://www.w3schools.com/howto/howto_js_draggable.asp">
-                // https://www.w3schools.com/howto/howto_js_draggable.asp
-            </a>
-            <p>
-                By W3School
-            </p>
-        </div>
-
-        <div class="title">Inspo</div>
-
-        <div>
-            <p>
-                <a target="_blank" href="https://joeyderuiter.me/">
-                    https://joeyderuiter.me/
+            <div>
+                <a target="_blank" href="https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d ">
+                    // https://medium.com/the-z/making-a-resizable-div-in-js-is-not-easy-as-you-think-bda19a1bc53d 
                 </a>
-            </p>
-        </div>
+                <p>
+                    By Hung Nguyen 
+                </p>
+            </div>
 
-        <div>
-            <p>
-                <a target="_blank" href="https://sketchfab.com/3d-models/low-poly-computer-desk-646ed84ecd9d40089c31d94f79334ca5">
-                    Low Poly Computer Desk
+            <div>
+                <a target="_blank" href="https://www.w3schools.com/howto/howto_js_draggable.asp">
+                    // https://www.w3schools.com/howto/howto_js_draggable.asp
                 </a>
-                (I modified it a little in blender)
-            </p>
+                <p>
+                    By W3School
+                </p>
+            </div>
+
+            <div class="title">Inspo</div>
+
+            <div>
+                <p>
+                    <a target="_blank" href="https://sketchfab.com/3d-models/low-poly-computer-desk-646ed84ecd9d40089c31d94f79334ca5">
+                        Low Poly Computer Desk
+                    </a>
+                    (I modified it a little in blender)
+                </p>
+            </div>
         </div>
 
         <script type="module" src="sound.js"></script>
+        <script type="module" src="text.js"></script>
    </body>
 </html>
