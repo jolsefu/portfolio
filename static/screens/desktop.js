@@ -1,7 +1,4 @@
-import * as sound from './sound.js';
-
-let elements = [];
-let iframe;
+let window_count = 0, iconHighlightElements = [];
 
 function showDate() {
   const clientDate = new Date();
@@ -10,27 +7,30 @@ function showDate() {
   document.querySelector( '#time-display' ).innerHTML = formattedDate;
 }
 
-function exitWindow() {
-  const window = document.querySelector( '.window' );
-  window.style.display = 'none';
-}
-
-function minimizeWindow() {
-  const window = document.querySelector( '.window' );
-  window.setAttribute( 'style', 'display: block; width: 900px; height: 600px; top: 100px; left: 100px;' );
-}
-
-function maximizeWindow() {
-  const window = document.querySelector( '.window' );
-  window.setAttribute( 'style', 'display: block; width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
+function removeLastWindow() {
+  document.querySelector( '#icon-group' ).lastChild.remove();
+  document.querySelector( `#window-3` ).remove();
+  window_count--;
 }
 
 function showWindowOnDoubleClick( icon ) {
   icon.addEventListener( 'dblclick', () => {
-    const window = document.querySelector( '.window' );
-    const body = document.querySelector( 'body' );
+    window_count++;
 
-    window.querySelector( '.window-header > .title' ).innerHTML = icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+    if ( window_count > 3 ) removeLastWindow();
+
+    const window = document.querySelector( '.window' ).cloneNode( true );
+    const body = document.querySelector( 'body' );
+    const iframe = window.querySelector( 'iframe' );
+
+    window.id = 'window' + '-' + window_count;
+    window.querySelector( '.window-header > .title' ).innerHTML = 
+      icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+    window.querySelector( '#minimize' ).addEventListener( 'click', () => minimizeWindow( window ) );
+    window.querySelector( '#maximize' ).addEventListener( 'click', () => maximizeWindow( window ) );
+    window.querySelector( '#exit' ).addEventListener( 'click', () => exitWindow( window ) );
+    draggableWindow( window );
+    makeResizableWindow( window );
 
     const source = icon.getAttribute( 'data-source' );
     iframe.src = source;
@@ -38,16 +38,50 @@ function showWindowOnDoubleClick( icon ) {
     const width = icon.getAttribute( 'data-width' );
     const height = icon.getAttribute( 'data-height' );
 
-    window.setAttribute( 'style', `display: block; width: ${width}; height: ${height};` );
+    const calcPos = () => {
+      return `${100 + ( window.id.slice( 7 ) * 10 ) }`;
+    };
+
+    const showWindow = () => {
+      window.setAttribute( 'style',
+        `display: block; 
+        width: ${width}; 
+        height: ${height}; 
+        top: ${ calcPos() }px; 
+        left: ${ calcPos() }px;` 
+      );
+    };
+    showWindow();
+
+    const iconClone = icon.cloneNode( true );
+    iconClone.id = 'icon' + '-' + window_count;
+    iconClone.setAttribute( 'style', '' );
+    iconClone.addEventListener( 'click', showWindow );
+    document.querySelector( '#icon-group' ).appendChild( iconClone );
 
     body.appendChild( window );
   } );
 }
 
+function exitWindow( window ) {
+  window.remove();
+  document.querySelector( `#icon-${window.id.slice( 7 )}` ).remove();
+  window_count--;
+}
+
+function minimizeWindow( window ) {
+  window.style.display = 'none';
+}
+
+function maximizeWindow( window ) {
+  window.setAttribute( 'style', 'display: block; width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
+}
+
 function makeResizableWindow( windowDiv ) {
-  const element = document.querySelector( windowDiv );
-  const resizers = document.querySelectorAll( windowDiv + ' .resizer' );
+  const element = windowDiv;
+  const resizers = windowDiv.querySelectorAll( '.resizer' );
   const minimum_size = 200;
+  const iframe = windowDiv.querySelector( 'iframe' );
 
   let original_width = 0;
   let original_height = 0;
@@ -72,8 +106,8 @@ function makeResizableWindow( windowDiv ) {
       original_mouse_x = e.pageX;
       original_mouse_y = e.pageY;
 
-      window.addEventListener( 'mousemove', resize );
-      window.addEventListener( 'mouseup', stopResize );
+      document.addEventListener( 'mousemove', resize );
+      document.addEventListener( 'mouseup', stopResize );
     } );
     
     function resize( e ) {
@@ -130,15 +164,16 @@ function makeResizableWindow( windowDiv ) {
     function stopResize() {
       iframe.setAttribute( 'style', 'pointer-events: auto;' );
 
-      window.removeEventListener('mousemove', resize)
+      document.removeEventListener('mousemove', resize)
     }
   }
 }
 
 function draggableWindow( windowDiv ) {
   let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  const iframe = windowDiv.querySelector( 'iframe' );
 
-  document.querySelector( '.' + windowDiv.className + '-' + 'header' ).onmousedown = dragMouseDown;
+  windowDiv.querySelector( '.' + windowDiv.className + '-' + 'header' ).onmousedown = dragMouseDown;
 
   function dragMouseDown( e ) {
     e.preventDefault();
@@ -175,7 +210,7 @@ function draggableWindow( windowDiv ) {
 
 function enableIconHighlightOnClick() {
   function isClickedOutside( event ) {
-    if ( !elements.includes( event.target ) ) removeAllIconHighlight();  
+    if ( !iconHighlightElements.includes( event.target ) ) removeAllIconHighlight();  
   }
 
   function removeAllIconHighlight() {
@@ -186,9 +221,9 @@ function enableIconHighlightOnClick() {
   const icons = document.querySelectorAll( '.icon' );
 
   icons.forEach( iconDiv => {
-    elements.push( iconDiv );
-    elements.push( iconDiv.children[0] );
-    elements.push( iconDiv.children[1] );
+    iconHighlightElements.push( iconDiv );
+    iconHighlightElements.push( iconDiv.children[0] );
+    iconHighlightElements.push( iconDiv.children[1] );
 
     removeAllIconHighlight();  
 
@@ -223,19 +258,11 @@ function formatClientDateTime(clientDateTime) {
 }
 
 function initialize() {
-  iframe = document.querySelector( 'iframe' );
-
   setInterval( showDate, 1000 );
   
   enableIconHighlightOnClick();
 
-  document.querySelectorAll( '.window' ).forEach( window => draggableWindow( window ) );
   document.querySelectorAll( '.icon-image' ).forEach( icon => showWindowOnDoubleClick( icon ) );
-
-  makeResizableWindow( '.window' );
-
-  document.addEventListener( 'mousedown', sound.playSingleClick );
-  document.addEventListener( 'mouseup', sound.playSingleClick );
 
   const maximizeButton = document.querySelector( '#maximize' );
   maximizeButton.addEventListener( 'click', maximizeWindow );
