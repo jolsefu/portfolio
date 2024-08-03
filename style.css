@@ -3,7 +3,7 @@
 	src: url('static/fonts/kongtext.ttf') format('truetype');
 }
 
-* {
+#back-btn, #dialog-default {
 	font-family: 'kongtext';
 	font-weight: 500;
 }
@@ -14,6 +14,15 @@ body {
 
 button {
 	letter-spacing: -4px;
+}
+
+#loader {
+	background-color: black;
+	color: white;
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	z-index: 99;
 }
 
 #back-btn {

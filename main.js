@@ -7,7 +7,7 @@ import WebGL from 'three/addons/capabilities/WebGL.js';
 import * as utils from './utils.js';
 import coordinates from './coordinates.json';
 
-let glRenderer, glScene, cssRenderer, cssScene, controls, camera;
+let glRenderer, glScene, cssRenderer, cssScene, controls, camera, manager;
 
 /////////////////////////////
 // Renderer Features       //
@@ -32,6 +32,30 @@ function createCSS3DRenderer() {
 	document.body.appendChild( cssRenderer.domElement );
 }
 
+function createLoadingManager() {
+	const htmlLoader = document.querySelector( '#loader' );
+	manager = new THREE.LoadingManager();
+
+	manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+		console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+	};
+	
+	manager.onLoad = function ( ) {
+		htmlLoader.setAttribute( 'style', 'display: none;' );
+	};
+	
+	manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+		const str = '<div>' + 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' + '</div';
+		const div = document.createElement( 'div' );
+		div.innerHTML = str;
+		htmlLoader.appendChild( div );
+	};
+	
+	manager.onError = function ( url ) {
+		console.log( 'There was an error loading ' + url );
+	};
+}
+
 /////////////////////////////
 // Scene Features          //
 /////////////////////////////
@@ -47,7 +71,7 @@ function addLight() {
 }
 
 function addModel() {
-	const loader = new GLTFLoader();
+	const loader = new GLTFLoader( manager );
 
 	loader.load( 'static/low_poly_computer_desk/scene.glb', function ( gltf ) {
 		const model = gltf.scene;
@@ -251,6 +275,7 @@ function initialize() {
 	cssScene = new THREE.Scene();
 	cssScene.scale.set( 0.0005, 0.0005, 0.00065 );
 
+	createLoadingManager();
 	createCSS3DRenderer();
 	createWebGLRenderer();
 
