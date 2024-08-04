@@ -9,6 +9,12 @@ import coordinates from './coordinates.json';
 
 let glRenderer, glScene, cssRenderer, cssScene, controls, camera, manager;
 
+function openDialog() {
+	document.addEventListener( 'DOMContentLoaded', () => {
+		document.querySelector( '#dialog-default' ).showModal();
+	} );
+};
+
 /////////////////////////////
 // Renderer Features       //
 /////////////////////////////
@@ -279,8 +285,6 @@ function initialize() {
 	createCSS3DRenderer();
 	createWebGLRenderer();
 
-	// glRenderer.domElement.style.pointerEvents = 'none';
-
 	createOrbitControls();
 	createCameraTimeline();
 
@@ -310,6 +314,7 @@ function initialize() {
 	glScene.add( blackPlane );
 }
 
+openDialog();
 initialize();
 
 /////////////////////////////
