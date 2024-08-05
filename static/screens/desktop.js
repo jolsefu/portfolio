@@ -7,13 +7,25 @@ function showDate() {
   document.querySelector( '#time-display' ).innerHTML = formattedDate;
 }
 
+function hideIconGroup() {
+  document.querySelector( '#icon-group' ).style.display = 'none';
+}
+
+function showIconGroup() {
+  document.querySelector( '#icon-group' ).style.display = 'block';
+}
+
 function removeLastWindow() {
   document.querySelector( '#icon-group' ).lastChild.remove();
   document.querySelector( `#window-3` ).remove();
   window_count--;
+
+  console.log( document.querySelector( '#icon-group' ).lastChild );
 }
 
 function createWindow( icon ) {
+  showIconGroup();
+
   window_count++;
 
   if ( window_count > 3 ) removeLastWindow();
@@ -69,6 +81,8 @@ function exitWindow( window ) {
   window.remove();
   document.querySelector( `#icon-${window.id.slice( 7 )}` ).remove();
   window_count--;
+
+  if ( !document.querySelector('#icon-group').lastChild ) hideIconGroup();
 }
 
 function minimizeWindow( window ) {
@@ -274,6 +288,8 @@ function initialize() {
 
   const exitButton = document.querySelector( '#exit' );
   exitButton.addEventListener( 'click', exitWindow );
+
+  hideIconGroup();
 }
 
 document.addEventListener( 'DOMContentLoaded', initialize );
