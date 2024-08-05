@@ -13,54 +13,56 @@ function removeLastWindow() {
   window_count--;
 }
 
+function createWindow( icon ) {
+  window_count++;
+
+  if ( window_count > 3 ) removeLastWindow();
+
+  const window = document.querySelector( '.window' ).cloneNode( true );
+  const body = document.querySelector( 'body' );
+  const iframe = window.querySelector( 'iframe' );
+
+  window.id = 'window' + '-' + window_count;
+  window.querySelector( '.window-header > .title' ).innerHTML = 
+    icon.parentNode.querySelector( '.icon-text' ).innerHTML;
+  window.querySelector( '#minimize' ).addEventListener( 'click', () => minimizeWindow( window ) );
+  window.querySelector( '#maximize' ).addEventListener( 'click', () => maximizeWindow( window ) );
+  window.querySelector( '#exit' ).addEventListener( 'click', () => exitWindow( window ) );
+  draggableWindow( window );
+  makeResizableWindow( window );
+
+  const source = icon.getAttribute( 'data-source' );
+  iframe.src = source;
+
+  const width = icon.getAttribute( 'data-width' );
+  const height = icon.getAttribute( 'data-height' );
+
+  const calcPos = () => {
+    return `${100 + ( window.id.slice( 7 ) * 10 ) }`;
+  };
+
+  const showWindow = () => {
+    window.setAttribute( 'style',
+      `display: block; 
+      width: ${width}; 
+      height: ${height}; 
+      top: ${ calcPos() }px; 
+      left: ${ calcPos() }px;` 
+    );
+  };
+  showWindow();
+
+  const iconClone = icon.cloneNode( true );
+  iconClone.id = 'icon' + '-' + window_count;
+  iconClone.setAttribute( 'style', '' );
+  iconClone.addEventListener( 'click', showWindow );
+  document.querySelector( '#icon-group' ).appendChild( iconClone );
+
+  body.appendChild( window );
+}
+
 function showWindowOnDoubleClick( icon ) {
-  icon.addEventListener( 'dblclick', () => {
-    window_count++;
-
-    if ( window_count > 3 ) removeLastWindow();
-
-    const window = document.querySelector( '.window' ).cloneNode( true );
-    const body = document.querySelector( 'body' );
-    const iframe = window.querySelector( 'iframe' );
-
-    window.id = 'window' + '-' + window_count;
-    window.querySelector( '.window-header > .title' ).innerHTML = 
-      icon.parentNode.querySelector( '.icon-text' ).innerHTML;
-    window.querySelector( '#minimize' ).addEventListener( 'click', () => minimizeWindow( window ) );
-    window.querySelector( '#maximize' ).addEventListener( 'click', () => maximizeWindow( window ) );
-    window.querySelector( '#exit' ).addEventListener( 'click', () => exitWindow( window ) );
-    draggableWindow( window );
-    makeResizableWindow( window );
-
-    const source = icon.getAttribute( 'data-source' );
-    iframe.src = source;
-
-    const width = icon.getAttribute( 'data-width' );
-    const height = icon.getAttribute( 'data-height' );
-
-    const calcPos = () => {
-      return `${100 + ( window.id.slice( 7 ) * 10 ) }`;
-    };
-
-    const showWindow = () => {
-      window.setAttribute( 'style',
-        `display: block; 
-        width: ${width}; 
-        height: ${height}; 
-        top: ${ calcPos() }px; 
-        left: ${ calcPos() }px;` 
-      );
-    };
-    showWindow();
-
-    const iconClone = icon.cloneNode( true );
-    iconClone.id = 'icon' + '-' + window_count;
-    iconClone.setAttribute( 'style', '' );
-    iconClone.addEventListener( 'click', showWindow );
-    document.querySelector( '#icon-group' ).appendChild( iconClone );
-
-    body.appendChild( window );
-  } );
+  icon.addEventListener( 'dblclick', () => createWindow( icon ) );
 }
 
 function exitWindow( window ) {
