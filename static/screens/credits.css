@@ -1,0 +1,37 @@
+@import "font.css";
+
+html {
+    font-family: 'schoolbook';
+    overflow: hidden;
+}
+
+body {
+    margin-top: 40px;
+}
+
+div {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+div > p {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#edit-btn {
+    background-color: #bfbfbf;
+    width: fit-content;
+    padding: 5px;
+    border: black solid 1px;
+    cursor: pointer;
+}
+
+#edit-btn:active, #edit-btn.active {
+    background-color: #9e9e9e;
+}

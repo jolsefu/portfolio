@@ -1,0 +1,22 @@
+@import "font.css";
+
+html {
+    font-family: 'schoolbook';
+    overflow: auto;
+}
+
+body {
+    margin-top: 40px;
+}
+
+#intro {
+    font-size: 1.1rem;
+}
+
+#images {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
