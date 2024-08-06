@@ -48,6 +48,7 @@ function createLoadingManager() {
 	};
 	
 	manager.onLoad = function ( ) {
+		openDialog();
 		htmlLoader.setAttribute( 'style', 'display: none;' );
 	};
 	
@@ -87,8 +88,6 @@ function addModel() {
 
 	loader.load( 'static/low_poly_computer_desk/scene_optimized_blender.glb', function ( gltf ) {
 		const model = gltf.scene;
-
-		console.log( model );
 
 		const screen = model.getObjectByName( 'screen' );
 		screen.position.x -= 1;
@@ -330,7 +329,6 @@ function initialize() {
 	glScene.add( blackPlane );
 }
 
-openDialog();
 initialize();
 
 /////////////////////////////
