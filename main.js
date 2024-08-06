@@ -10,12 +10,6 @@ import coordinates from './coordinates.json';
 
 let glRenderer, glScene, cssRenderer, cssScene, controls, camera, manager;
 
-function openDialog() {
-	document.addEventListener( 'DOMContentLoaded', () => {
-		document.querySelector( '#dialog-default' ).showModal();
-	} );
-};
-
 /////////////////////////////
 // Renderer Features       //
 /////////////////////////////
@@ -38,29 +32,41 @@ function createCSS3DRenderer() {
 
 	document.body.appendChild( cssRenderer.domElement );
 }
-
+;
 function createLoadingManager() {
 	const htmlLoader = document.querySelector( '#loader' );
+	htmlLoader.style.display = 'block';
 	manager = new THREE.LoadingManager();
 
 	manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-		console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+		const str = '<div>' + 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' + '</div>';
+		const div = document.createElement( 'div' );
+		div.innerHTML = str;
+
+		htmlLoader.appendChild( div );
 	};
 	
 	manager.onLoad = function ( ) {
 		openDialog();
+		showBackButton();
+
 		htmlLoader.setAttribute( 'style', 'display: none;' );
 	};
 	
 	manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
-		const str = '<div>' + 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' + '</div';
+		const str = '<div>' + 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' + '</div>';
 		const div = document.createElement( 'div' );
 		div.innerHTML = str;
+
 		htmlLoader.appendChild( div );
 	};
 	
 	manager.onError = function ( url ) {
-		console.log( 'There was an error loading ' + url );
+		const str = '<div>' + 'There was an error loading ' + url + '</div>';
+		const div = document.createElement( 'div' );
+		div.innerHTML = str;
+
+		htmlLoader.appendChild( div );
 	};
 }
 
@@ -290,7 +296,6 @@ function enableGridHelper() {
 
 function initialize() {
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
 	glScene = new THREE.Scene();
 	cssScene = new THREE.Scene();
 	cssScene.scale.set( 0.0005, 0.0005, 0.00065 );
@@ -326,10 +331,43 @@ function initialize() {
 		new THREE.Vector3( -155, 3910, 1180 ),
 		new THREE.Vector3( -0.1, 0, 0 ),
 	);
+
 	glScene.add( blackPlane );
+
+	checkWebGL();
 }
 
-initialize();
+function correctOrientation() {
+	if ( window.matchMedia( "(orientation: portrait)" ).matches ) {
+		const div = document.createElement( 'div' );
+		const button = document.createElement( 'button' );
+		const warning = '<div>This website is best experienced in landscape. Click the button after reorientating.</div>';
+
+		button.onclick = () => { window.location.reload( true ) };
+		button.innerHTML = 'Reload page';
+
+		div.setAttribute( 'style', 'display: flex; height: 50vh; justify-content: center; align-items: center; flex-direction: column;' );
+		div.innerHTML = warning;
+		div.appendChild( button );
+
+		document.querySelector( '#warning' ).appendChild( div );
+ 	}
+ 
+ 	if ( window.matchMedia( "(orientation: landscape)" ).matches ) {
+		initialize();
+ 	}
+}
+
+function openDialog() {
+	document.querySelector( '#dialog-default' ).style.display = 'block';
+	document.querySelector( '#dialog-default' ).showModal();
+};
+
+function showBackButton() {
+	document.querySelector( '#back-btn' ).style.display = 'block';
+}
+
+correctOrientation();
 
 /////////////////////////////
 // Rendering               //
@@ -350,11 +388,13 @@ function animate() {
 	}
 }
 
-if ( WebGL.isWebGLAvailable() ) {
-	animate();
-} else {
-	const warning = WebGL.getWebGLErrorMessage();
-	document.getElementById( 'container' ).appendChild( warning );
+function checkWebGL() {
+	if ( WebGL.isWebGLAvailable() ) {
+		animate();
+	} else {
+		const warning = WebGL.getWebGLErrorMessage();
+		document.querySelector( '#warning' ).appendChild( warning );
+	}
 }
 
 window.addEventListener( 'resize', () => {

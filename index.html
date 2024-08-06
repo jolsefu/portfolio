@@ -8,13 +8,15 @@
 		<link rel="stylesheet" href="./node_modules/nes.css/css/nes.min.css">
 	</head>
 	<body>
-		<div id="loader"></div>
+		<div id="warning"></div>
 
-		<div id="back-btn">
+		<div id="loader" style="display: none;"></div>
+
+		<div id="back-btn" style="display: none;">
 			<button type="button" class="nes-btn is-warning">Back</button>	
 		</div>
 
-		<dialog class="nes-dialog" id="dialog-default">
+		<dialog class="nes-dialog" id="dialog-default" style="display: none;">
 			<form method="dialog" class="text-center">
 				<p class="title">Jules' Portfolio</p>
 				<p>Made with ThreeJS, NES.css,</p>
