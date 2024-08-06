@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import WebGL from 'three/addons/capabilities/WebGL.js';
 
 import * as utils from './utils.js';
@@ -79,10 +80,17 @@ function addLight() {
 function addModel() {
 	const loader = new GLTFLoader( manager );
 
-	loader.load( 'static/low_poly_computer_desk/scene.glb', function ( gltf ) {
+	const dracoLoader = new DRACOLoader();
+	dracoLoader.setDecoderPath( 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/' );
+	dracoLoader.setDecoderConfig( {type: 'js'} );
+	loader.setDRACOLoader( dracoLoader );
+
+	loader.load( 'static/low_poly_computer_desk/scene_optimized_blender.glb', function ( gltf ) {
 		const model = gltf.scene;
 
-		const screen = model.getObjectByName( 'monitor_2' );
+		console.log( model );
+
+		const screen = model.getObjectByName( 'screen' );
 		screen.position.x -= 1;
 		screen.material.transparent = true;
 		screen.material.opacity = 0.4;
@@ -198,7 +206,7 @@ function onObjectClick(event) {
 	if ( intersects.length > 0 ) {
 		const object = intersects[0].object;
 
-		if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
+		if ( object.name === 'monitor' || object.name === 'screen' ) {
 			utils.animateCameraToMonitor( controls );
 		}
 	}
@@ -216,7 +224,7 @@ function onObjectHover( event ) {
 
 	if ( intersects.length > 0 ) {
 		const object = intersects[0].object;
-
+ 
 		if ( validateObject( object.name ) && utils.isInDesk ) {
 			animateObject( object );
 		}
@@ -241,12 +249,6 @@ function animateObject( object ) {
 		tween = utils.animateObject( object, 0, 45, 0, 0, 1 );
 		utils.animateObject( pen, 0, 2000, 0, 0, 1 );
 		utils.animateObject( bottomPaper, 0, 40, 0, .2, .5 );
-	} else if ( object.name === 'monitor_1' || object.name === 'monitor_2' ) {
-		// const monitor = rootNode.getObjectByName( 'monitor_1' );
-		// const screen = rootNode.getObjectByName( 'monitor_2' );
-
-		// tween = utils.animateObject( monitor, 0, 15, 0, 0, 1.5 ); 
-		// utils.animateObject( screen, 0, 15, 0, 0, 1.5 );
 	} else {
 		tween = utils.animateObject( object, 0, 15, 0, 0, 1.5 );
 	}
@@ -304,13 +306,13 @@ function initialize() {
 	setupObjectFunctionality();
 
 	// Helpers
-	enableCameraHelper();	
+	// enableCameraHelper();	
 	// enableGridHelper();
 
 	// Add features
 	addLight();
 	addModel();
-	addGround();
+	// addGround();
 
 	addCSS( 
 		'static/screens/desktop.html',
