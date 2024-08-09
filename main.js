@@ -341,12 +341,25 @@ function correctOrientation() {
 	if ( window.matchMedia( "(orientation: portrait)" ).matches ) {
 		const div = document.createElement( 'div' );
 		const button = document.createElement( 'button' );
-		const warning = '<div style="width: 50vh;">This website is best experienced in a laptop or computer. If you do still wish to continue, orient it to landscape. Click the button after reorientating.</div>';
+		const warning = `
+		<div style="width: 50vw;">
+				This website is best experienced in a laptop or computer. 
+				If you do still wish to continue, orient it to landscape. 
+				Click the button after reorientating.
+		</div>
+		`;
 
 		button.onclick = () => { window.location.reload( true ) };
 		button.innerHTML = 'Reload page';
 
-		div.setAttribute( 'style', 'display: flex; height: 50vh; justify-content: center; align-items: center; flex-direction: column; margin: 1rem;' );
+		div.setAttribute( 'style', `
+			display: flex;
+			height: 50vh;
+			justify-content: center; 
+			align-items: center; 
+			flex-direction: column; 
+			margin: 1rem;
+		` );
 		div.innerHTML = warning;
 		div.appendChild( button );
 
@@ -398,6 +411,10 @@ function checkWebGL() {
 }
 
 window.addEventListener( 'resize', () => {
+	if ( window.innerHeight > window.innerWidth )	{
+		window.location.reload( true );
+	}
+
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
 
