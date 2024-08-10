@@ -117,19 +117,6 @@ function addModel() {
 	} );
 }
 
-function addGround() {
-	const plane = new THREE.PlaneGeometry( 300, 300 ).rotateX( -Math.PI * 0.5 );
-	const material = new THREE.ShadowMaterial();
-	const mesh = new THREE.Mesh( plane, material );
-	mesh.receiveShadow = true;
-
-	const material2 = new THREE.MeshBasicMaterial( {color: new THREE.Color( 0x2e2e2e ).multiplyScalar( 1.5 )} );
-	const mesh2 = new THREE.Mesh( plane, material2 );
-
-	glScene.add( mesh );
-	glScene.add( mesh2 );
-}
-
 function addCSS( url, width, height, position, rotation ) {
 	const plane = utils.createPlane( width, height, position, rotation );
 	glScene.add( plane );
@@ -316,7 +303,6 @@ function initialize() {
 	// Add features
 	addLight();
 	addModel();
-	// addGround();
 
 	addCSS( 
 		'static/screens/desktop.html',
