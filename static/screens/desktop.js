@@ -48,6 +48,8 @@ function createWindow( icon ) {
 
   const width = icon.getAttribute( 'data-width' );
   const height = icon.getAttribute( 'data-height' );
+  window.setAttribute( 'data-width', width );
+  window.setAttribute( 'data-height', height );
 
   const calcPos = () => {
     return `${100 + ( window.id.slice( 7 ) * 10 ) }`;
@@ -90,7 +92,20 @@ function minimizeWindow( window ) {
 }
 
 function maximizeWindow( window ) {
-  window.setAttribute( 'style', 'display: block; width: 100vw; height: 92.5vh; top: 58px; left: 0;' );
+  const maximized = window.getAttribute( 'data-maximized' ) === 'true';
+  const topbarHeight = document.querySelector( '#topbar' ).offsetHeight + 'px';
+
+  if ( maximized ) {
+    const width = window.getAttribute( 'data-width' );
+    const height = window.getAttribute( 'data-height' );
+
+    window.setAttribute( 'style', `display: block; width: ${ width }; height: ${ height }; top: ${ topbarHeight }; left: 0;` );
+    window.setAttribute( 'data-maximized', 'false' );
+  } else if ( !maximized ) {
+    window.setAttribute( 'style', `display: block; width: 100vw; height: 92.5vh; top: ${ topbarHeight }; left: 0;` );
+    window.setAttribute( 'data-maximized', 'true' );
+  }
+
 }
 
 function makeResizableWindow( windowDiv ) {

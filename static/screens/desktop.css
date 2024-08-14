@@ -34,6 +34,7 @@ body {
 
 #window-symbols {
     display: flex;
+    align-items: center;
 }
 
 #icon-group {
@@ -44,6 +45,14 @@ body {
 
 #icon-group > .icon-image {
     height: 30px;
+}
+
+#minimize {
+    background-color: orange;
+}
+
+#maximize {
+    background-color: green;
 }
 
 .window {
@@ -80,6 +89,11 @@ body {
     margin-top: 3px;
 }
 
+.title {
+    display: flex;
+    align-items: center;
+}
+
 .exit {
     background-color: red;
     color: white;
@@ -91,11 +105,11 @@ body {
 }
 
 .symbol {
-    height: 70%;
+    height: 50%;
+    width: 5px;
     padding: 0 3px 0 3px;
     border: 1px black solid;
     margin-right: 5px;
-    margin-top: 3px;
     font-weight: bold;
     cursor: pointer;
 }
