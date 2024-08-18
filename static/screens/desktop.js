@@ -1,5 +1,7 @@
 let window_count = 0, iconHighlightElements = [];
 
+const isMobileDevice = window.navigator.userAgent.toLowerCase().includes( "mobi" );
+
 function showDate() {
   const clientDate = new Date();
   const formattedDate = formatClientDateTime( clientDate );
@@ -76,7 +78,8 @@ function createWindow( icon ) {
 }
 
 function showWindowOnDoubleClick( icon ) {
-  icon.addEventListener( 'dblclick', () => createWindow( icon ) );
+  if ( !isMobileDevice ) icon.addEventListener( 'dblclick', () => createWindow( icon ) );
+  else icon.addEventListener( 'click', () => createWindow( icon ) );
 }
 
 function exitWindow( window ) {
@@ -124,23 +127,29 @@ function makeResizableWindow( windowDiv ) {
   for ( let i = 0; i < resizers.length; i++ ) {
     const currentResizer = resizers[ i ];
 
-    currentResizer.addEventListener( 'mousedown', ( e ) => {
-      e.preventDefault();
-      iframe.setAttribute( 'style', 'pointer-events: none;' );
+    ['mousedown', 'touchstart'].forEach( evt => {
+      currentResizer.addEventListener( evt, ( e ) => {
+        e.preventDefault();
+        iframe.setAttribute( 'style', 'pointer-events: none;' );
 
-      original_width = 
-        parseFloat( getComputedStyle( element, null ).getPropertyValue( 'width' ).replace( 'px', '' ) );
-      original_height = 
-        parseFloat( getComputedStyle( element, null ).getPropertyValue( 'height' ).replace( 'px', '' ) );
-      original_x = element.getBoundingClientRect().left;
-      original_y = element.getBoundingClientRect().top;
-      original_mouse_x = e.pageX;
-      original_mouse_y = e.pageY;
+        original_width = 
+          parseFloat( getComputedStyle( element, null ).getPropertyValue( 'width' ).replace( 'px', '' ) );
+        original_height = 
+          parseFloat( getComputedStyle( element, null ).getPropertyValue( 'height' ).replace( 'px', '' ) );
+        original_x = element.getBoundingClientRect().left;
+        original_y = element.getBoundingClientRect().top;
+        original_mouse_x = e.pageX;
+        original_mouse_y = e.pageY;
 
-      document.addEventListener( 'mousemove', resize );
-      document.addEventListener( 'mouseup', stopResize );
+        [ 'mousemove', 'touchmove' ].forEach( evt => {
+          document.addEventListener( evt, resize );
+        } );
+        [ 'mouseup', 'touchend' ].forEach( evt => {
+          document.addEventListener( evt, stopResize );
+        } );
+      } );
     } );
-    
+        
     function resize( e ) {
       if (currentResizer.classList.contains('bottom-right')) {
         const width = original_width + (e.pageX - original_mouse_x);
@@ -195,7 +204,9 @@ function makeResizableWindow( windowDiv ) {
     function stopResize() {
       iframe.setAttribute( 'style', 'pointer-events: auto;' );
 
-      document.removeEventListener('mousemove', resize)
+      [ 'mousemove', 'touchmove' ].forEach( evt => {
+        document.removeEventListener( evt, resize );
+      } );
     }
   }
 }
@@ -204,7 +215,10 @@ function draggableWindow( windowDiv ) {
   let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   const iframe = windowDiv.querySelector( 'iframe' );
 
-  windowDiv.querySelector( '.' + windowDiv.className + '-' + 'header' ).onmousedown = dragMouseDown;
+  const selectedWindowDiv = windowDiv.querySelector( '.' + windowDiv.className + '-' + 'header' );
+  [ 'mousedown', 'touchstart' ].forEach( evt => {
+    selectedWindowDiv.addEventListener( evt, dragMouseDown );
+  } );
 
   function dragMouseDown( e ) {
     e.preventDefault();
@@ -214,8 +228,12 @@ function draggableWindow( windowDiv ) {
 
     iframe.setAttribute( 'style', 'pointer-events: none;' );
 
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
+    [ 'mouseup', 'touchend' ].forEach( evt => {
+      document.addEventListener( evt, closeDragElement );
+    } );
+    [ 'mousemove', 'touchmove' ].forEach( evt => {
+      document.addEventListener( evt, elementDrag );
+    } );
   }
 
   function elementDrag( e ) {
@@ -234,8 +252,12 @@ function draggableWindow( windowDiv ) {
   function closeDragElement() {
     iframe.setAttribute( 'style', 'pointer-events: auto;' );
 
-    document.onmouseup = null;
-    document.onmousemove = null;
+    [ 'mouseup', 'touchend' ].forEach( evt => {
+      document.removeEventListener( evt, closeDragElement );
+    } );
+    [ 'mousemove', 'touchmove' ].forEach( evt => {
+      document.removeEventListener( evt, elementDrag );
+    } );
   }
 }
 
