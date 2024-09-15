@@ -32,7 +32,7 @@ function createCSS3DRenderer() {
 
 	document.body.appendChild( cssRenderer.domElement );
 }
-;
+
 function createLoadingManager() {
 	const htmlLoader = document.querySelector( '#loader' );
 	htmlLoader.style.display = 'block';
